@@ -1,0 +1,117 @@
+@model ScrumMovieTheater.Models.Booking
+<link rel="stylesheet" href="~/css/success.css" />
+
+<div class="ticket-container">
+
+    <div class="ticket-header">
+        <h1>🎬 Booking Confirmed!</h1>
+        <p>Your movie ticket is ready</p>
+    </div>
+
+
+    <div class="ticket-body">
+
+        <h2>@Model.Showtime.Movie.Title</h2>
+
+        <div class="movie-info">
+
+            <p>
+                <strong>Description:</strong><br />
+                @Model.Showtime.Movie.Description
+            </p>
+
+            <p>
+                <strong>Genre:</strong>
+                @Model.Showtime.Movie.Genre
+            </p>
+
+            <p>
+                <strong>Rating:</strong>
+                @Model.Showtime.Movie.Rating
+            </p>
+
+        </div>
+
+
+        <hr />
+
+
+        <div class="show-info">
+
+            <p>
+                <strong>🎭 Theater:</strong>
+                @Model.Showtime.Theater.Name
+            </p>
+
+            <p>
+                <strong>📅 Date:</strong>
+                @Model.Showtime.ShowDate.ToShortDateString()
+            </p>
+
+            <p>
+                <strong>🕒 Time:</strong>
+                @Model.Showtime.TimeSlot
+            </p>
+
+        </div>
+
+
+        <hr />
+
+
+        <div class="customer-info">
+
+            <p>
+                <strong>Customer:</strong>
+                @Model.CustomerName
+            </p>
+
+            <p>
+                <strong>Adults:</strong>
+                @Model.Adults
+            </p>
+
+            <p>
+                <strong>Kids:</strong>
+                @Model.Kids
+            </p>
+
+        </div>
+
+
+        <div class="price-box">
+
+            <h3>Total Price</h3>
+            <h2>$@Model.TotalPrice</h2>
+
+        </div>
+
+
+        <div class="confirmation-box">
+
+            <h3>Confirmation Code</h3>
+
+            <h1>@Model.ConfirmationCode</h1>
+
+            <p>
+                Present this code at the theater entrance.
+            </p>
+
+        </div>
+
+        <div class="ticket-actions">
+
+            <a asp-controller="Home" asp-action="Index" class="ticket-btn">
+                🏠 Back to Home
+            </a>
+
+            <a asp-controller="Showtimes" asp-action="Index" class="ticket-btn">
+                🎟️ Book Another Ticket
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>

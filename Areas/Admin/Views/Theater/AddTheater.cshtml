@@ -1,0 +1,48 @@
+﻿@model ScrumMovieTheater.Models.Theater
+<link rel="stylesheet" href="~/css/Theater.css" />
+
+
+<div class="theater-container">
+
+
+ <h2>Add Theater</h2>
+
+ <form class="theater-form"
+     asp-area="Admin"
+      asp-controller="Theater"
+      asp-action="AddTheater"
+      method="post">
+
+    <div class="mb-3">
+        <label class="form-label">Theater Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea asp-for="Description"
+                  class="form-control"></textarea>
+    </div>
+
+
+        <button type="submit" class="theater-save-btn">
+        Add Theater
+    </button>
+
+
+    <a asp-action="Index"
+       class="theater-save-btn">
+        Cancel
+    </a>
+
+</form>
+
+</div>
+

@@ -1,0 +1,99 @@
+@model ScrumMovieTheater.Models.Movie
+<style>
+body {
+    background-color: #000000  !important;
+    color: white;
+}
+
+table {
+    background-color: #1e293b !important;
+    color: white;
+}
+
+thead {
+    background-color: #000000  !important;
+    color: #facc15;
+}
+
+tbody tr {
+    background-color: #000000  !important;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #111827 !important;
+}
+</style>
+
+<link rel="stylesheet" href="~/css/AddMovie.css" />
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+
+            <div class="admin-card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Add Movie</h5>
+                </div>
+
+                <div class="card-body">
+
+                     <form asp-area="Admin"
+                           asp-controller="Movie"
+                           asp-action="AddMovie"
+                           method="post"
+                           enctype="multipart/form-data">
+                           @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input asp-for="Title" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Genre</label>
+                            <select asp-for="Genre" class="form-select">
+                                <option>Action</option>
+                                <option>Comedy</option>
+                                <option>Drama</option>
+                                <option>Horror</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Runtime (minutes)</label>
+                            <input asp-for="RuntimeMinutes" class="form-control" />
+                        </div>
+                      
+                         
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <input asp-for="Rating" class="form-control" />
+                        </div>
+                        
+                        <div>
+                          <label>Release Date</label>
+                          <input asp-for="ReleaseDate" type="date" class="form-control" />
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label class="form-label">Movie Image</label>
+                          <input type="file" name="ImageFile" class="form-control" />
+                         </div>
+                         <button type="submit" class="btn-save w-100">
+                            Save Movie
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

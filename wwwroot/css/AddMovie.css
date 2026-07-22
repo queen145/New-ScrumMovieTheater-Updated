@@ -1,0 +1,61 @@
+﻿/* ===== SHARED ADMIN FORM STYLE (AddMovie + AddShowTime) ===== */
+
+.admin-card {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.card-header {
+    background: #0b1220 !important;
+    padding: 15px;
+    border-bottom: 2px solid #334155;
+}
+
+.card-header h5 {
+    margin: 0;
+    color: white;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.form-label {
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.form-control,
+.form-select {
+    background: #334155;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border: 1px solid #3b82f6;
+    box-shadow: none;
+    background: #334155;
+    color: white;
+}
+
+.btn-save {
+    background: #3b82f6;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-save:hover {
+    background: #16a34a;
+}

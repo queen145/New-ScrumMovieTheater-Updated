@@ -1,0 +1,121 @@
+/* Theater Admin Pages */
+
+.theater-container {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    color: white;
+    margin-top: 20px;
+}
+
+
+    /* Title */
+
+    .theater-container h2 {
+        color: #dc3545;
+        margin-bottom: 25px;
+    }
+
+
+/* Add button */
+
+.theater-add-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+    .theater-add-btn:hover {
+        background: #a71d2a;
+        color: white;
+    }
+
+
+/* Table */
+
+.theater-table {
+    width: 100%;
+    background: #1c1c1c;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+    .theater-table th {
+        background: #8b0000;
+        padding: 12px;
+    }
+
+
+    .theater-table td {
+        padding: 12px;
+        border-bottom: 1px solid #333;
+    }
+
+
+    .theater-table tr:hover {
+        background: #252525;
+    }
+
+
+/* Add/Edit Form */
+
+.theater-form {
+    background: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+}
+
+
+    .theater-form label {
+        color: white;
+        margin-bottom: 5px;
+    }
+
+
+    .theater-form input,
+    .theater-form textarea {
+        background: #222;
+        color: white;
+        border: 1px solid #555;
+        border-radius: 6px;
+    }
+
+
+        .theater-form input:focus,
+        .theater-form textarea:focus {
+            border-color: #dc3545;
+            outline: none;
+        }
+
+
+/* Save button */
+
+.theater-save-btn {
+    background: #198754;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+
+    .theater-save-btn:hover {
+        background: #146c43;
+    }
+
+
+/* Cancel button */
+
+.theater-cancel-btn {
+    background: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+}
