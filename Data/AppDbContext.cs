@@ -66,8 +66,8 @@ namespace ScrumMovieTheater.Data
                .HasForeignKey(s => s.AuditoriumId);
 
             modelBuilder.Entity<Auditorium>()
-               .HasOne<Theater>()
-               .WithMany()
+               .HasOne(a => a.Theater)
+               .WithMany(t => t.Auditoriums)
                .HasForeignKey(a => a.TheaterId);
         }
     }

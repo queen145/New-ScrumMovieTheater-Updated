@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.Auditorium>
+
+<a asp-action="AddAuditorium" class="btn btn-danger">
+    Add Auditorium
+</a>
+
+<h2>Manage Auditoriums</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Auditorium</th>
+            <th>Theater</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var auditorium in Model)
+        {
+            <tr>
+                <td>@auditorium.Name</td>
+
+                <td>@auditorium.Theater?.Name</td>
+
+                <td>@auditorium.Capacity</td>
+
+                <td>
+                    @(auditorium.Active ? "Active" : "Inactive")
+                </td>
+
+                <td>
+                    <a asp-action="EditAuditorium"
+                       asp-route-id="@auditorium.AuditoriumId"
+                       class="btn btn-warning">
+                        Edit
+                    </a>
+
+                    @if (auditorium.Active)
+                    {
+                        <form asp-action="DeactivateAuditorium"
+                              asp-route-id="@auditorium.AuditoriumId"
+                              method="post"
+                              style="display:inline">
+
+                            <button type="submit" class="btn btn-danger">
+                                Deactivate
+                            </button>
+
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

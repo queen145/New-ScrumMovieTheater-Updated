@@ -14,5 +14,7 @@ namespace ScrumMovieTheater.Models
         public int Capacity { get; set; }
 
         public bool Active { get; set; }
+
+        public Theater? Theater { get; set; }
     }
 }

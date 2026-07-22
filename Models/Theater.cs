@@ -11,6 +11,8 @@ namespace ScrumMovieTheater.Models
         public string? Address { get; set; }
         public string? Description { get; set; }
         public List<Showtime> Showtimes { get; set; } = new List<Showtime>();
+
+        public List<Auditorium> Auditoriums { get; set; } = new();
         public bool Active { get; set; }
     }
 } 

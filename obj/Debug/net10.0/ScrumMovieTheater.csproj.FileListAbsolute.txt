@@ -218,3 +218,4 @@ C:\Projects\ScrumMovieTheater\obj\Debug\net10.0\ScrumMovieTheater.pdb
 C:\Projects\ScrumMovieTheater\obj\Debug\net10.0\ScrumMovieTheater.genruntimeconfig.cache
 C:\Projects\ScrumMovieTheater\obj\Debug\net10.0\ref\ScrumMovieTheater.dll
 C:\Projects\ScrumMovieTheater\obj\Debug\net10.0\compressed\jqbkri5h33-{0}-x6efw7gx4c-x6efw7gx4c.gz
+C:\Projects\ScrumMovieTheater\obj\Debug\net10.0\ScrumMovieTheater.sourcelink.json
