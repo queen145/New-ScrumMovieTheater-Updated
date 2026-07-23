@@ -20,10 +20,18 @@ namespace ScrumMovieTheater.Controllers
             var showtime = _context.Showtimes
                 .Include(s => s.Movie)
                 .Include(s => s.Theater)
+                .Include(s => s.Auditorium)
                 .FirstOrDefault(s => s.Id == showtimeId);
 
             if (showtime == null)
                 return RedirectToAction("Index", "Showtimes");
+
+            int ticketsSold = _context.Bookings
+               .Where(b => b.ShowtimeId == showtimeId)
+               .Sum(b => b.Adults + b.Kids);
+
+            ViewBag.RemainingSeats = showtime.Auditorium!.Capacity - ticketsSold;
+            
 
             ViewBag.ShowtimeId = showtime.Id;
             ViewBag.Movie = showtime.Movie?.Title;
@@ -39,11 +47,30 @@ namespace ScrumMovieTheater.Controllers
         {
             // Get the selected showtime price
             var showtime = _context.Showtimes
-                .FirstOrDefault(s => s.Id == showtimeId);
+               .Include(s => s.Movie)
+               .Include(s => s.Theater)
+               .Include(s => s.Auditorium)
+               .FirstOrDefault(s => s.Id == showtimeId);
 
             if (showtime == null)
             {
                 return NotFound();
+            }
+
+            int ticketsRequested = adults + kids;
+
+            int ticketsSold = _context.Bookings
+                .Where(b => b.ShowtimeId == showtimeId)
+                .Sum(b => b.Adults + b.Kids);
+
+            int remainingSeats = showtime.Auditorium!.Capacity - ticketsSold;
+
+            if (ticketsRequested > remainingSeats)
+            {
+                ViewBag.ErrorMessage =
+                    $"Sorry, only {remainingSeats} seats are available.";
+
+                return View("Tickets", showtime);
             }
 
             decimal adultPrice = showtime.Price;
@@ -77,7 +104,10 @@ namespace ScrumMovieTheater.Controllers
                     .ThenInclude(s => s.Movie)
                 .Include(b => b.Showtime)
                     .ThenInclude(s => s.Theater)
+                .Include(b => b.Showtime)
+                    .ThenInclude(s => s.Auditorium)
                 .FirstOrDefault(b => b.Id == booking.Id);
+               
 
             return View("Success", confirmedBooking);
         }

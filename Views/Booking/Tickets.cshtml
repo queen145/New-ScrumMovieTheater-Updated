@@ -4,6 +4,13 @@
     ViewData["Title"] = "Book Tickets";
 }
 
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
 <style>
 .showtime-card,
 .ticket-card {
@@ -140,6 +147,14 @@ body{
     <p>
         <strong>Theater:</strong> @Model.Theater?.Name
     </p>
+    <p>
+        <strong>Auditorium:</strong> @Model.Auditorium?.Name
+    </p>
+
+    <p>
+        <strong>Seats Remaining:</strong> @ViewBag.RemainingSeats
+    </p>
+
 
     <p>
         <strong>Showtime:</strong>

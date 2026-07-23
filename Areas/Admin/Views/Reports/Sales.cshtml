@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.SalesReportViewModel>
+
+   <h2>Ticket Sales Report</h2>
+
+<form method="get">
+
+    <label>Start Date</label>
+    <input type="date" name="startDate" />
+
+    <label>End Date</label>
+    <input type="date" name="endDate" />
+
+    <button type="submit" class="btn btn-danger">
+        Generate Report
+    </button>
+
+    <a asp-area="Admin"
+       asp-controller="Reports"
+       asp-action="ExportCSV"
+       class="btn btn-success">
+        Export CSV
+    </a>
+
+</form>
+
+<br />
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Theater</th>
+            <th>Tickets Sold</th>
+            <th>Revenue</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>@report.TheaterName</td>
+                <td>@report.TicketsSold</td>
+                <td>@report.Revenue.ToString("C")</td>
+            </tr>
+        }
+
+        <tr class="table-dark">
+            <th>Total</th>
+            <th>@Model.Sum(r => r.TicketsSold)</th>
+            <th>@Model.Sum(r => r.Revenue).ToString("C")</th>
+        </tr>
+
+            
+        }
+
+    </tbody>
+
+</table>

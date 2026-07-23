@@ -20,6 +20,8 @@ namespace ScrumMovieTheater.Controllers
             var showtimes = _context.Showtimes
                 .Include(s => s.Movie)
                 .Include(s => s.Theater)
+                .Include(s => s.Auditorium)
+                .Where(s => s.Theater!.Active && s.Auditorium!.Active)
                 .AsQueryable();
 
             // FILTER: theater
@@ -34,10 +36,17 @@ namespace ScrumMovieTheater.Controllers
                 showtimes = showtimes.Where(s => s.ShowDate == showDate);
             }
 
-           // dropdown data
-            ViewBag.Theaters = _context.Theaters.ToList();
+            // dropdown data
+            ViewBag.Theaters = _context.Showtimes
+                .Include(s => s.Theater)
+                .Include(s => s.Auditorium)
+                .Where(s => s.Theater!.Active && s.Auditorium!.Active)
+                .Select(s => s.Theater)
+                .Distinct()
+                .ToList();
 
             ViewBag.Dates = _context.Showtimes
+                .Where(s => s.Theater!.Active && s.Auditorium!.Active)
                 .Select(s => s.ShowDate)
                 .Distinct()
                 .OrderBy(d => d)
