@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ScrumMovieTheater</title>
     <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/theater-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ScrumMovieTheater.styles.css" asp-append-version="true" />
@@ -47,9 +51,11 @@
                         <input class="form-control me-2" type="search" name="q" placeholder="Search movies" aria-label="Search movies">
                         <button class="btn btn-outline-light" type="submit">Search</button>
                     </form>
+                    <a class="nav-link ms-3" asp-area="Admin" asp-controller="Home" asp-action="Index">Manager</a>
                 </div>
             </div>
         </nav>
+        <div class="marquee-rail"></div>
     </header>
 
     <div class="container-fluid px-0">
@@ -58,6 +64,7 @@
         </main>
     </div>
 
+    <div class="marquee-rail"></div>
     <footer class="border-top footer bg-dark py-3">
         <div class="container text-center">
             <span class="footer-text">&copy; 2026 - ScrumMovieTheater - </span><a asp-area="" asp-controller="Home" asp-action="Privacy" class="footer-link">Privacy</a>

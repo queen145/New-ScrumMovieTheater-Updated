@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumMovieTheater")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ac38783e247f7a90b13ffd553dc57d09aff3471")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48c9ac6f4837c260ce723954b9b8b9ff2ee4665c")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumMovieTheater")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumMovieTheater")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
