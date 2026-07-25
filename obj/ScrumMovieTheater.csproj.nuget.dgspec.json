@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\ScrumMovieTheater\\ScrumMovieTheater.csproj": {}
+    "C:\\Users\\Ibrahim Khan\\Pictures\\ScrumMovieTheater\\New-ScrumMovieTheater-Updated\\ScrumMovieTheater.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\ScrumMovieTheater\\ScrumMovieTheater.csproj": {
+    "C:\\Users\\Ibrahim Khan\\Pictures\\ScrumMovieTheater\\New-ScrumMovieTheater-Updated\\ScrumMovieTheater.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\ScrumMovieTheater\\ScrumMovieTheater.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Khan\\Pictures\\ScrumMovieTheater\\New-ScrumMovieTheater-Updated\\ScrumMovieTheater.csproj",
         "projectName": "ScrumMovieTheater",
-        "projectPath": "C:\\Projects\\ScrumMovieTheater\\ScrumMovieTheater.csproj",
-        "packagesPath": "C:\\Users\\anmol\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\ScrumMovieTheater\\obj\\",
+        "projectPath": "C:\\Users\\Ibrahim Khan\\Pictures\\ScrumMovieTheater\\New-ScrumMovieTheater-Updated\\ScrumMovieTheater.csproj",
+        "packagesPath": "C:\\Users\\Ibrahim Khan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ibrahim Khan\\Pictures\\ScrumMovieTheater\\New-ScrumMovieTheater-Updated\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\anmol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Ibrahim Khan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

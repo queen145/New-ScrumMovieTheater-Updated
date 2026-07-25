@@ -1,50 +1,5 @@
 @model List<ScrumMovieTheater.Models.Movie>
-<style>
-    body {
-        background-color: #000000;
-        color: white;
-    }
-
-    h2 {
-        color: white;
-    }
-
-    table {
-        color: white !important;
-        background-color: #000000;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .table th {
-        background-color: #000000;
-        color: white;
-    }
-
-    .table td {
-        background-color: #000000;
-        color: white;
-        border-color: #334155;
-    }
-
-    .alert-success {
-        background-color: #14532d;
-        color: white;
-        border: none;
-    }
-
-    .btn-primary {
-        background-color: #2563eb;
-        border-color: #2563eb;
-    }
-
-    .btn-danger {
-        background-color: #dc2626;
-        border-color: #dc2626;
-    }
-</style>
-
-
+<link rel="stylesheet" href="~/css/Admin.css" />
 <h2>Movies List</h2>
 
 @if (TempData["SuccessMessage"] != null)

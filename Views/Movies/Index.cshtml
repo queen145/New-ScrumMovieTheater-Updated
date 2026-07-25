@@ -1,4 +1,5 @@
 @model List<ScrumMovieTheater.Models.Movie>
+<link rel="stylesheet" href="~/css/Movies.css" />
 
 @{
     ViewData["Title"] = "Movies";
@@ -12,21 +13,6 @@
         Search result: <strong>@ViewBag.Search</strong>
     </div>
 }
-
-<style>
-    .movie-card {
-        transition: transform 0.2s;
-    }
-
-    .movie-card:hover {
-        transform: scale(1.03);
-    }
-
-    .movie-link {
-        text-decoration: none;
-        color: black;
-    }
-</style>
 
 <div class="row">
     @foreach (var movie in Model)

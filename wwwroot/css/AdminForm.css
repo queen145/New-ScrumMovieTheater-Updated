@@ -1,0 +1,30 @@
+.admin-card {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+    .admin-card .card-header {
+        background: linear-gradient(180deg, var(--velvet) 0%, var(--velvet-deep) 100%);
+        border-bottom: 1px solid var(--hairline);
+        padding: 1rem 1.25rem;
+    }
+
+        .admin-card .card-header h5 {
+            margin: 0;
+            color: var(--paper);
+            letter-spacing: .1em;
+        }
+
+    .admin-card .card-body {
+        padding: 1.75rem;
+    }
+
+    .admin-card .table {
+        box-shadow: none;
+        margin-bottom: 0;
+    }
