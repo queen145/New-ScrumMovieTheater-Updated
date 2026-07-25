@@ -22,11 +22,19 @@
        These currently use href="#" as placeholders — replace with a real route when available. *@
     @foreach (var name in ViewBag.TheaterNames)
     {
-        <a class="btn btn-danger" href="#" role="button">@name</a>
+        @using (Html.BeginForm("pickTheater", "Movie", FormMethod.Post))
+        {   <input type="hidden" name="selectedTheater" value="@name"/>
+            <button class="btn btn-danger" type="submit" role="button">@name</button>   
+        }
     }
+
 </div>
 
-<div class="ticket-date-container mt-3">
+<button onclick="selectTheater()"></button>
+
+@if(!String.IsNullOrEmpty(ViewBag.SelectedTheater))
+{
+    <div class="ticket-date-container mt-3">
     <style>
             /* Viewport that clips the sliding row; change max-width to show more or fewer items */
             .menu-wrapper {
@@ -84,20 +92,35 @@
             <div id="menu" class="menu" role="list">
                 @* Generate a fixed number of date items starting from today.
                    Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
+            
+
                 @for (int i = 0; i < 14; i++)
                 {
                     var dt = DateTime.Today.AddDays(i);
-                    <div class="btn btn-danger" role="listitem" data-day="@dt.ToString("yyyy-MM-dd")">
-                        <div class="menu-item-day">@dt.ToString("ddd")</div>
-                        <div class="menu-item-date">@dt.ToString("M/d")</div>
-                    </div>
+                    var theater = ViewBag.SelectedTheater; 
+                    @using(Html.BeginForm("selectMovieDate", "Movie", FormMethod.Post))
+                    {
+                        
+                        <input type="hidden" name="selectedTheater" value="@theater"/>
+                        <input type="hidden" name="date" value="@dt."/>                       
+
+                        <button class="btn btn-danger" type="submit" role="listitem" data-day="@dt.ToString("yyyy-MM-dd")">
+                            <div class="menu-item-day">@dt.ToString("ddd")</div>
+                            <div class="menu-item-date">@dt.ToString("M/d")</div>
+                        </button>
+                    }
+                    @* var dt = DateTime.Today.AddDays(i); *@
+
                 }
             </div>
         </div>
 
         <button class="btn btn-dark" id="nextButton" type="button" aria-label="Next">Next</button>
+
     </div>
 </div>
+
+
 <script>
     // Grab important DOM nodes once
     const menu = document.getElementById('menu');               // the sliding row
@@ -199,3 +222,38 @@
     // Initialize the button state on first render.
     updateControls();
 </script>
+
+@if(ViewBag.MovieTitles != null && ViewBag.MovieTitles.Count() > 0)
+{
+    <div class="container">
+        <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
+        <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
+             so they remain visible even when the sliding content is clipped. -->
+        <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
+
+        <!-- The viewport that clips the sliding .menu -->
+        <div class="menu-wrapper mt-3" id="menuWrapper" aria-hidden="false">
+                <div id="menu" class="menu" role="list">
+                    @* Generate a fixed number of date items starting from today.
+                        Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        
+                        <div class="btn btn-danger" role="listitem">
+                            <div class="menu-item-day">John Wick</div>
+                            
+                        </div>
+                    }
+                </div>
+        </div>
+        <button class="btn btn-dark" id="nextButton" type="button" aria-label="Next">Next</button>
+    
+</div>
+
+
+
+</div>
+}
+
+}
+

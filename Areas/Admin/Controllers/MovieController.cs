@@ -325,11 +325,13 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
         ViewBag.Genre = genres;
 
+        var movies = await _context.Movies
+                .Select(m => m.Title)
+                .Distinct()
+                .ToListAsync();
 
-        //var timeSlot = await _context.Showtimes
-        //        .Where(s => s.Id == showId)
-        //        .Select(s => (TimeSpan?)s.TimeSlot)
-        //        .FirstOrDefaultAsync(); 
+            ViewBag.MovieTitles = movies;               
+         
 
         return View();
     }
@@ -338,5 +340,28 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult pickTheater(string selectedTheater)
+        {
+            ViewBag.SelectedTheater = selectedTheater;
+            ViewBag.TheaterNames = new List<string> {selectedTheater};
+
+            return View("BoxOfficePurchase");
+             
+        }
+
+        [HttpPost]
+        public IActionResult selectMovieDate(string selectedTheater, DateTime date) 
+        {
+            ViewBag.SelectedTheater = selectedTheater;
+            ViewBag.TheaterNames = new List<string> { selectedTheater };
+            ViewBag.Date = date; 
+            
+
+            return View("BoxOfficePurchase");
+        }
     }
+    
+    
 }

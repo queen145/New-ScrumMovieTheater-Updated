@@ -2,13 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Areas",
-    "\\Areas\\Admin\\Views",
-    "\\bin\\Debug",
-    "\\Controllers",
-    "\\obj",
-    "\\Views",
-    "\\Views\\Booking"
+    "\\Areas\\Admin",
+    "\\Areas\\Admin\\Views"
   ],
-  "SelectedNode": "\\Controllers\\BookingController.cs",
+  "SelectedNode": "\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }
