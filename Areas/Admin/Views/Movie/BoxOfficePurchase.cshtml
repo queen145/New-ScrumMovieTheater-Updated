@@ -222,7 +222,7 @@
     updateControls();
 </script>
 
-@if(ViewBag.MovieTitles != null && ViewBag.MovieTitles.Count() > 0)
+@if(ViewBag.Movies != null)
 {
     <div class="container">
         <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
@@ -235,11 +235,11 @@
                 <div id="menu" class="menu" role="list">
                     @* Generate a fixed number of date items starting from today.
                         Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
-                    @for (int i = 0; i < 5; i++)
+                        @foreach (var movie in ViewBag.Movies)
                     {
                         
                         <div class="btn btn-danger" role="listitem">
-                            <div class="menu-item-day">John Wick</div>
+                            <div class="menu-item-day">@movie</div>
                             
                         </div>
                     }
