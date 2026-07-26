@@ -329,8 +329,6 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 .Select(m => m.Title)
                 .Distinct()
                 .ToListAsync();
-
-            ViewBag.MovieTitles = movies;               
          
 
         return View();
@@ -342,7 +340,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult pickTheater(string selectedTheater)
+        public  IActionResult pickTheater(string selectedTheater)
         {
             ViewBag.SelectedTheater = selectedTheater;
             ViewBag.TheaterNames = new List<string> {selectedTheater};
@@ -352,15 +350,38 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult selectMovieDate(string selectedTheater, DateTime date) 
+        public async Task<IActionResult> selectMovieDate(string selectedTheater, DateTime date) 
         {
             ViewBag.SelectedTheater = selectedTheater;
             ViewBag.TheaterNames = new List<string> { selectedTheater };
-            ViewBag.Date = date; 
+            ViewBag.Date = date;
             
 
+            var theaterId = await _context.Theaters
+                .Where(t => t.Name == selectedTheater)
+                .Select(t => t.TheaterId)
+                // find the first instance, if none can be found return null.
+                .FirstOrDefaultAsync(); 
+
+            var movieIds = await _context.Showtimes
+
+                .Where(s => s.ShowDate.Date == date.Date)//.Where(o => o.OrderDate.Date == targetDay.Date);
+                .Where(s => s.TheaterId == theaterId)
+                .Select(s => s.MovieId)
+                .ToListAsync(); 
+                
+            var movies = await _context.Movies
+                .Where(m => movieIds.Contains(m.MovieId))
+                .Select(m => m.Title)          
+                .ToListAsync();
+
+            ViewBag.Movies = movies; 
+            
             return View("BoxOfficePurchase");
         }
+
+        //[HttpPost]
+        //public IActionResult selectedMovie(string selectedMovie)
     }
     
     

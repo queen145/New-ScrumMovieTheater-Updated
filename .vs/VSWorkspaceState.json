@@ -3,8 +3,10 @@
     "",
     "\\Areas",
     "\\Areas\\Admin",
-    "\\Areas\\Admin\\Views"
+    "\\Areas\\Admin\\Controllers",
+    "\\Areas\\Admin\\Views",
+    "\\Areas\\Admin\\Views\\Movie"
   ],
-  "SelectedNode": "\\appsettings.json",
+  "SelectedNode": "\\Data",
   "PreviewInSolutionExplorer": false
 }

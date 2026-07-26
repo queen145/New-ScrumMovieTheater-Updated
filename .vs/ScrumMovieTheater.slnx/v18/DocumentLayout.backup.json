@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AF1C25BC-E335-FF21-FFB1-A82A4BEE6057}|ScrumMovieTheater.csproj|f:\\new-scrummovietheater-updated\\new-scrummovietheater-updated\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{AF1C25BC-E335-FF21-FFB1-A82A4BEE6057}|ScrumMovieTheater.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{AF1C25BC-E335-FF21-FFB1-A82A4BEE6057}|ScrumMovieTheater.csproj|f:\\new-scrummovietheater-updated\\new-scrummovietheater-updated\\areas\\admin\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF1C25BC-E335-FF21-FFB1-A82A4BEE6057}|ScrumMovieTheater.csproj|solutionrelative:areas\\admin\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF1C25BC-E335-FF21-FFB1-A82A4BEE6057}|ScrumMovieTheater.csproj|f:\\new-scrummovietheater-updated\\new-scrummovietheater-updated\\areas\\admin\\views\\movie\\boxofficepurchase.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF1C25BC-E335-FF21-FFB1-A82A4BEE6057}|ScrumMovieTheater.csproj|solutionrelative:areas\\admin\\views\\movie\\boxofficepurchase.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,7 +39,7 @@
           ]
         },
         {
-          "DockedWidth": 17,
+          "DockedWidth": 19,
           "SelectedChildIndex": 5,
           "Children": [
             {
@@ -61,15 +65,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-24T23:18:42.866Z",
+              "Title": "MovieController.cs",
+              "DocumentMoniker": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\Areas\\Admin\\Controllers\\MovieController.cs",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Controllers\\MovieController.cs",
+              "ToolTip": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\Areas\\Admin\\Controllers\\MovieController.cs",
+              "RelativeToolTip": "Areas\\Admin\\Controllers\\MovieController.cs",
+              "ViewState": "AgIAAC0BAAAAAAAAAIAwwDgBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T02:48:34.862Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BoxOfficePurchase.cshtml",
+              "DocumentMoniker": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\Areas\\Admin\\Views\\Movie\\BoxOfficePurchase.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Movie\\BoxOfficePurchase.cshtml",
+              "ToolTip": "F:\\New-ScrumMovieTheater-Updated\\New-ScrumMovieTheater-Updated\\Areas\\Admin\\Views\\Movie\\BoxOfficePurchase.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Movie\\BoxOfficePurchase.cshtml",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAUwGYAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-25T22:51:17.39Z"
             }
           ]
         },

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumMovieTheater")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3feb05832164f68f9e892c4555c2961739d9e84e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85f62ccd102d21c723ff972375e92f4422ca069c")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumMovieTheater")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumMovieTheater")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

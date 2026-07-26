@@ -83,8 +83,6 @@
     </style>
 
     <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
-        <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
-             so they remain visible even when the sliding content is clipped. -->
         <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
 
         <!-- The viewport that clips the sliding .menu -->
@@ -100,9 +98,10 @@
                     var theater = ViewBag.SelectedTheater; 
                     @using(Html.BeginForm("selectMovieDate", "Movie", FormMethod.Post))
                     {
-                        
+                        // I need you to capture information on my webpage and not leave anything visible on the screen.
+                        // form actions 
                         <input type="hidden" name="selectedTheater" value="@theater"/>
-                        <input type="hidden" name="date" value="@dt."/>                       
+                        <input type="hidden" name="date" value="@dt"/>                       
 
                         <button class="btn btn-danger" type="submit" role="listitem" data-day="@dt.ToString("yyyy-MM-dd")">
                             <div class="menu-item-day">@dt.ToString("ddd")</div>
