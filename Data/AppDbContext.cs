@@ -27,7 +27,13 @@ namespace ScrumMovieTheater.Data
         public DbSet<Booking> Bookings { get; set; }
 
         public DbSet<Auditorium> Auditoriums { get; set; }
-       
+
+        public DbSet<ConcessionItem> ConcessionItems { get; set; }
+
+        public DbSet<ConcessionInventory> ConcessionInventories { get; set; }
+
+       // public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+
         // Override the OnModelCreating method to configure the database schema
         // This method is called when the model is being created/initialized
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +44,9 @@ namespace ScrumMovieTheater.Data
             modelBuilder.Entity<Movie>().ToTable("movie");
             modelBuilder.Entity<Showtime>().ToTable("showtimes");
             modelBuilder.Entity<Auditorium>().ToTable("auditorium");
+            modelBuilder.Entity<ConcessionItem>().ToTable("concessionitems");
+            modelBuilder.Entity<ConcessionInventory>().ToTable("concessioninventory");
+         //   modelBuilder.Entity<InventoryTransaction>().ToTable("inventorytransactions");
 
             modelBuilder.Entity<Theater>()
                 .HasKey(t => t.TheaterId);
@@ -69,6 +78,21 @@ namespace ScrumMovieTheater.Data
                .HasOne(a => a.Theater)
                .WithMany(t => t.Auditoriums)
                .HasForeignKey(a => a.TheaterId);
+
+            modelBuilder.Entity<ConcessionItem>()
+              .HasKey(c => c.ConcessionItemId);
+
+            modelBuilder.Entity<ConcessionInventory>()
+             .HasOne(i => i.ConcessionItem)
+             .WithMany()
+             .HasForeignKey(i => i.ConcessionItemId);
+
+           modelBuilder.Entity<ConcessionInventory>()
+                .HasOne(i => i.Theater)
+                .WithMany()
+                .HasForeignKey(i => i.TheaterId);
+
+            
         }
     }
 }

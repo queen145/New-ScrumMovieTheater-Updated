@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Manager Dashboard";
+}
+<link rel="stylesheet" href="~/css/Admin.css" />
+
+<div class="dashboard">
+
+    <div class="title">🎭 Manager Dashboard</div>
+    <div class="subtitle">Manage concessions, inventory, and theater operations</div>
+
+    <div class="card-grid">
+
+        <a asp-area="Manager"
+           asp-controller="Concession"
+           asp-action="Index"
+           class="card-box">
+
+            <div class="card-title">🍿 Concession Management</div>
+            <div class="card-text">
+                Manage concession items, prices, and availability
+            </div>
+
+        </a>
+
+        <a asp-area="Manager"
+           asp-controller="ConcessionInventory"
+           asp-action="Index"
+           class="card-box">
+
+            <div class="card-title">📦 Inventory</div>
+            <div class="card-text">
+                Track inventory and update stock quantities
+            </div>
+
+        </a>
+
+        <a asp-area="Manager"
+           asp-controller="LowStock"
+           asp-action="Index"
+           class="card-box">
+
+            <div class="card-title">⚠ Low Stock Alerts</div>
+            <div class="card-text">
+                View products that need to be restocked
+            </div>
+
+        </a>
+
+        <a asp-area="Manager"
+           asp-controller="Report"
+           asp-action="Index"
+           class="card-box">
+
+            <div class="card-title">📊 Reports</div>
+            <div class="card-text">
+                View concession sales and inventory reports
+            </div>
+
+        </a>
+
+    </div>
+
+</div>

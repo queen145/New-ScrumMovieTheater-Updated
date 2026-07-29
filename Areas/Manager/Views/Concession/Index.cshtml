@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.ConcessionItem>
+
+@{
+    ViewData["Title"] = "Concession Management";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h1>🍿 Concession Management</h1>
+
+<a asp-area="Manager"
+   asp-controller="Concession"
+   asp-action="Create"
+   class="btn btn-primary">
+    Add Concession Item
+</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category</td>
+                <td>$@item.Price</td>
+                <td>
+                    @(item.Active ? "Active" : "Inactive")
+                </td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@item.ConcessionItemId"
+                       class="btn-admin">
+                        Edit
+                    </a>
+
+                    <form asp-action="ToggleActive"
+                          asp-route-id="@item.ConcessionItemId"
+                          method="post"
+                          style="display:inline;">
+
+                        @if (item.Active)
+                        {
+                            <button type="submit" class="btn btn-danger">
+                                Deactivate
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-success">
+                                Activate
+                            </button>
+                        }
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

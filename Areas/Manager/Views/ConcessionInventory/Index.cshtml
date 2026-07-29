@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.ConcessionInventory>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h2>Concession Inventory</h2>
+
+<div class="manager-card">
+
+    <div class="card-header">
+        <h5>Inventory Management</h5>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Theater</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Theater?.Name</td>
+
+                        <td>@item.ConcessionItem?.Name</td>
+
+                        <td>@item.QuantityOnHand</td>
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@item.InventoryId"
+                               class="btn btn-primary">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
