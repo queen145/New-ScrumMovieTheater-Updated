@@ -85,3 +85,148 @@
         </div>
     </section>
 }
+<!-- Movie Reviews Section -->
+<section class="py-5 bg-black text-white">
+    <div class="container">
+
+        <h2 class="fw-bold section-title border-bottom pb-2 mb-4">
+            Movie Reviews
+        </h2>
+
+        <p class="text-light mb-4">
+            Share your movie theater experience with us.
+        </p>
+
+        <div class="card bg-dark text-white p-4 shadow mb-5">
+            <form id="reviewForm">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label for="reviewName" class="form-label">
+                            Name
+                        </label>
+
+                        <input type="text"
+                               id="reviewName"
+                               class="form-control"
+                               placeholder="Enter your name"
+                               required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="reviewRating" class="form-label">
+                            Rating
+                        </label>
+
+                        <select id="reviewRating"
+                                class="form-select"
+                                required>
+                            <option value="">Select a rating</option>
+                            <option value="5">★★★★★ - Excellent</option>
+                            <option value="4">★★★★☆ - Very Good</option>
+                            <option value="3">★★★☆☆ - Good</option>
+                            <option value="2">★★☆☆☆ - Fair</option>
+                            <option value="1">★☆☆☆☆ - Poor</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="reviewComment" class="form-label">
+                            Comment
+                        </label>
+
+                        <textarea id="reviewComment"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Write your review"
+                                  required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit"
+                                class="btn ticket-btn">
+                            Submit Review
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <h3 class="mb-4">Latest Reviews</h3>
+
+        <div id="reviewList">
+
+            <div class="card bg-dark text-white p-3 shadow mb-3">
+                <div class="d-flex justify-content-between">
+                    <strong>Sarah M.</strong>
+                    <span class="text-warning">★★★★★</span>
+                </div>
+
+                <p class="mb-0 mt-2">
+                    Great theater experience and comfortable seats.
+                </p>
+            </div>
+
+            <div class="card bg-dark text-white p-3 shadow mb-3">
+                <div class="d-flex justify-content-between">
+                    <strong>James T.</strong>
+                    <span class="text-warning">★★★★☆</span>
+                </div>
+
+                <p class="mb-0 mt-2">
+                    Ticket booking was easy and the movie was excellent.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+@section Scripts {
+    <script>
+        const reviewForm = document.getElementById("reviewForm");
+
+        reviewForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("reviewName").value;
+            const rating = Number(document.getElementById("reviewRating").value);
+            const comment = document.getElementById("reviewComment").value;
+
+            const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+            const reviewCard = document.createElement("div");
+            reviewCard.className =
+                "card bg-dark text-white p-3 shadow mb-3";
+
+            const reviewHeader = document.createElement("div");
+            reviewHeader.className =
+                "d-flex justify-content-between";
+
+            const reviewName = document.createElement("strong");
+            reviewName.textContent = name;
+
+            const reviewStars = document.createElement("span");
+            reviewStars.className = "text-warning";
+            reviewStars.textContent = stars;
+
+            const reviewComment = document.createElement("p");
+            reviewComment.className = "mb-0 mt-2";
+            reviewComment.textContent = comment;
+
+            reviewHeader.appendChild(reviewName);
+            reviewHeader.appendChild(reviewStars);
+
+            reviewCard.appendChild(reviewHeader);
+            reviewCard.appendChild(reviewComment);
+
+            document
+                .getElementById("reviewList")
+                .prepend(reviewCard);
+
+            reviewForm.reset();
+        });
+    </script>
+}

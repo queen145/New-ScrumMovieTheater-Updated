@@ -51,4 +51,8 @@ public class HomeController : Controller
 
         return View(model);
     }
+    public IActionResult Privacy()
+{
+    return View("~/Views/Home/Privacy.cshtml");
+}
 }
