@@ -1,18 +1,18 @@
 .theater-brand {
-    color: #e50914 !important;
-    letter-spacing: 1px;
+    color: var(--paper) !important;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    font-family: Georgia, serif;
+    font-family: var(--font-display);
 }
 
 .nav-link:hover {
-    color: #e50914 !important;
+    color: var(--paper) !important;
 }
 
 .footer-text {
-    color: white;
+    color: var(--muted);
 }
 
 .footer-link {
-    color: #e50914;
+    color: var(--brass);
 }
