@@ -230,7 +230,11 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         ViewBag.Theaters = _context.Theaters.ToList(); // if you have Theater table
         ViewBag.Auditoriums = _context.Auditoriums.ToList();
 
-        return View();
+
+            // _context.Auditoriums.First() = 
+            // @Auditorium.Theater.Name
+
+            return View();
     }
 
         [Authorize(Roles = "Admin, Manager")]
