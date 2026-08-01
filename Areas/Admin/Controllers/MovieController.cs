@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public IActionResult AddMovie()
         {
@@ -24,6 +26,8 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         }
         // save movie in database and return to home
         [HttpPost]
+
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public IActionResult AddMovie(Movie movie, IFormFile ImageFile)
         {
@@ -56,13 +60,16 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         TempData["SuccessMessage"] = "Movie added successfully!";
         return RedirectToAction("Index");
         }
-          // LIST movies
+
+        [Authorize(Roles = "Admin, Manager")]
+        // LIST movies
         public IActionResult Index()
         {
             var movies = _context.Movies.ToList();
             return View(movies);
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public IActionResult EditMovie(int movieId, int showtimeId)
         {
@@ -126,6 +133,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public IActionResult EditMovie(UpdateMovieViewModel model)
         {
@@ -166,6 +174,8 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public IActionResult DeleteMovie(int id)
         {
@@ -179,6 +189,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         return View(movie);
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -212,17 +223,23 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
         // showtime get action
 
-    public IActionResult AddShowTime()
+        [Authorize(Roles = "Admin, Manager")]
+        public IActionResult AddShowTime()
     {
         ViewBag.Movies = _context.Movies.ToList();
         ViewBag.Theaters = _context.Theaters.ToList(); // if you have Theater table
         ViewBag.Auditoriums = _context.Auditoriums.ToList();
 
-        return View();
+
+            // _context.Auditoriums.First() = 
+            // @Auditorium.Theater.Name
+
+            return View();
     }
 
-    // post method for showtime
-    [HttpPost]
+        [Authorize(Roles = "Admin, Manager")]
+        // post method for showtime
+        [HttpPost]
     public IActionResult AddShowTime(Showtime showTime)
     {
         if (ModelState.IsValid)
@@ -272,7 +289,8 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             return View(showTime);
         }
 
-    public IActionResult Bookings()
+        [Authorize(Roles = "Admin, Manager")]
+        public IActionResult Bookings()
     {
         var bookings = _context.Bookings
             .Include(b => b.Showtime)
@@ -286,9 +304,89 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
 
 
+        // If separated like this than the person has to be all three. Using the && statement. 
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles="Manager")]
+        //[Authorize(Roles="Employee")]
+        [Authorize(Roles="Admin, Manager, Employee")]
+    public async Task<IActionResult> BoxOfficePurchase()
+    {
+        // 1. Await the database call
+        // 2. Use _context instead of _dbContext
+        // 3. Select the TheaterName property, then call ToListAsync() at the end
+        var theaterNames = await _context.Theaters.Select(t => t.Name).ToListAsync();
+
+        // Pass the list of theater names to the view using 
+        ViewBag.TheaterNames = theaterNames;
+
+        // LINQ 
+        var genres = await _context.Movies
+                .Select(m => m.Genre)
+                .Distinct()
+                .Where(g => !string.IsNullOrEmpty(g))
+                .OrderBy(g => g)
+                .ToListAsync();
+
+        ViewBag.Genre = genres;
+
+        var movies = await _context.Movies
+                .Select(m => m.Title)
+                .Distinct()
+                .ToListAsync();
+         
+
+        return View();
+    }
+        [Authorize(Roles = "Admin, Manager")]
         public IActionResult Manager()
         {
             return View();
         }
+
+        [HttpPost]
+        public  IActionResult pickTheater(string selectedTheater)
+        {
+            ViewBag.SelectedTheater = selectedTheater;
+            ViewBag.TheaterNames = new List<string> {selectedTheater};
+
+            return View("BoxOfficePurchase");
+             
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> selectMovieDate(string selectedTheater, DateTime date) 
+        {
+            ViewBag.SelectedTheater = selectedTheater;
+            ViewBag.TheaterNames = new List<string> { selectedTheater };
+            ViewBag.Date = date;
+            
+
+            var theaterId = await _context.Theaters
+                .Where(t => t.Name == selectedTheater)
+                .Select(t => t.TheaterId)
+                // find the first instance, if none can be found return null.
+                .FirstOrDefaultAsync(); 
+
+            var movieIds = await _context.Showtimes
+
+                .Where(s => s.ShowDate.Date == date.Date)//.Where(o => o.OrderDate.Date == targetDay.Date);
+                .Where(s => s.TheaterId == theaterId)
+                .Select(s => s.MovieId)
+                .ToListAsync(); 
+                
+            var movies = await _context.Movies
+                .Where(m => movieIds.Contains(m.MovieId))
+                .Select(m => m.Title)          
+                .ToListAsync();
+
+            ViewBag.Movies = movies; 
+            
+            return View("BoxOfficePurchase");
+        }
+
+        //[HttpPost]
+        //public IActionResult selectedMovie(string selectedMovie)
     }
+    
+    
 }

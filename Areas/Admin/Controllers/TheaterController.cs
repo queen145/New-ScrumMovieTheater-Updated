@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScrumMovieTheater.Data;
 using ScrumMovieTheater.Models;
 
@@ -14,7 +15,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             _context = context;
         }
 
-
+        [Authorize(Roles = "Admin, Manager")]
         // Display all theaters
         public IActionResult Index()
         {
@@ -23,7 +24,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             return View(theaters);
         }
 
-
+        [Authorize(Roles = "Admin, Manager")]
         // Open Add Theater page
         [HttpGet]
         public IActionResult AddTheater()
@@ -33,6 +34,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
 
         // Save new theater
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public IActionResult AddTheater(Theater theater)
         {
@@ -51,7 +53,8 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             return View(theater);
 
         }
-            // Open Edit Theater page
+        // Open Edit Theater page
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public IActionResult EditTheater(int id)
         {
@@ -68,6 +71,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
 
         // Save edited theater
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public IActionResult EditTheater(Theater theater)
         {
@@ -92,6 +96,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
 
         // Deactivate theater
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public IActionResult Deactivate(int id)
         {
