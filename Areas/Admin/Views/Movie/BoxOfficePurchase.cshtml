@@ -222,36 +222,67 @@
     updateControls();
 </script>
 
-@if(ViewBag.Movies != null)
-{
-    <div class="container">
-        <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
-        <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
-             so they remain visible even when the sliding content is clipped. -->
-        <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
+    @if (ViewBag.Movies != null)
+    {
+        <div class="container">
 
-        <!-- The viewport that clips the sliding .menu -->
-        <div class="menu-wrapper mt-3" id="menuWrapper" aria-hidden="false">
-                <div id="menu" class="menu" role="list">
-                    @* Generate a fixed number of date items starting from today.
-                        Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
+            <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
+                <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
+                so they remain visible even when the sliding content is clipped. -->
+                <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
+
+                <!-- The viewport that clips the sliding .menu -->
+                <div class="menu-wrapper mt-3" id="menuWrapper" aria-hidden="false">
+                    <div id="menu" class="menu" role="list">
+                        @* Generate a fixed number of date items starting from today.
+                            Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
                         @foreach (var movie in ViewBag.Movies)
-                    {
-                        
-                        <div class="btn btn-danger" role="listitem">
-                            <div class="menu-item-day">@movie</div>
-                            
-                        </div>
-                    }
-                </div>
-        </div>
+                        {
+
+                            <div class="btn btn-danger" role="listitem">
+                                <div class="menu-item-day">@movie</div>
+
+                            </div>
+                        }
+                    </div>
+            </div>
         <button class="btn btn-dark" id="nextButton" type="button" aria-label="Next">Next</button>
     
-</div>
+        </div>
+    </div>
+
+        <div class="container">
+
+            <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
+                <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
+             so they remain visible even when the sliding content is clipped. -->
+                <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
+
+                <!-- The viewport that clips the sliding .menu -->
+                <div class="menu-wrapper mt-3" id="menuWrapper" aria-hidden="false">
+                    <div id="menu" class="menu" role="list">
+                        @* Generate a fixed number of date items starting from today.
+                            Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
+                        @foreach (var showtime in new[]{"8:00AM", "10:30AM", "16:30PM", "17:00PM"})
+                        {
+
+                            <div class="btn btn-danger" role="listitem">
+                                <div class="menu-item-day">@showtime</div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-dark" id="nextButton" type="button" aria-label="Next">Next</button>
+
+            </div>
+        </div>
+
+    
 
 
 
-</div>
+
 }
 
 }
