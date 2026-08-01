@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ScrumMovieTheater.Data;
 using ScrumMovieTheater.Services;
+using Auth0.AspNetCore.Authentication; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+    options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
+});
+
 
 // Add DbContext HERE
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -32,6 +41,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 
