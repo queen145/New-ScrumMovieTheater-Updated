@@ -379,13 +379,36 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 .Select(m => m.Title)          
                 .ToListAsync();
 
-            ViewBag.Movies = movies; 
+            ViewBag.Movies = movies;
+            ViewBag.TheaterId = theaterId; 
             
             return View("BoxOfficePurchase");
         }
 
-        //[HttpPost]
-        //public IActionResult selectedMovie(string selectedMovie)
+        [HttpPost]
+        public async Task<IActionResult> selectMovie(string selectedTheaterId, DateTime date, string movieTitle)
+        {
+            var theaterId = int.Parse(selectedTheaterId); 
+            
+
+            var movieId = await _context.Movies
+                .Where(m => m.Title == movieTitle)
+                .Select(m => m.MovieId)
+                .FirstOrDefaultAsync();
+
+            var showtimes = await _context.Showtimes
+                .Where(s => movieId == s.MovieId)
+                .Where(s => s.TheaterId == theaterId)
+                .Where(s => s.ShowDate == date)
+                .Select(s => s.TimeSlot)
+                .ToListAsync(); 
+
+            ViewBag.Showtimes = showtimes; 
+            return View("BoxOfficePurchase");
+        }
+
+
+
     }
     
     
