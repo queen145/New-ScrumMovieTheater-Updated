@@ -1,4 +1,6 @@
-﻿@section Styles {
+﻿@model ScrumMovieTheater.Models.HomeViewModel
+
+@section Styles {
     <link rel="stylesheet" href="~/css/Home.css" asp-append-version="true" />
 }
 
@@ -10,8 +12,7 @@
     <div class="container">
         <h1 class="display-3 fw-bold hero-title">Scrum Movie Theater</h1>
         <p class="lead text-light">Experience the magic of cinema like never before</p>
-        <a asp-controller="Movies" asp-action="Index" class="btn btn-lg mt-3 me-2 hero-btn">See All Movies</a>
-        <a asp-area="Admin" asp-controller= "Home" asp-action="Index" class="btn btn-outline-light btn-lg mt-3">Manager Portal</a>
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-lg mt-3 hero-btn">See All Movies</a>
     </div>
 </section>
 
@@ -20,115 +21,212 @@
     <div class="container">
         <h2 class="fw-bold section-title border-bottom pb-2 mb-4">Now Showing</h2>
         <div class="row g-4">
-            <div class="col-6 col-md-3">
-                <div class="card movie-card bg-dark text-white h-100 shadow">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎬</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Movie Title</h5>
-                        <p class="card-text text-muted small">Action | 2h 15m</p>
-                        <p class="card-text small text-light">An epic adventure that will keep you on the edge of your seat.</p>
-                        <a asp-controller="Tickets" asp-action="Index" class="btn btn-sm w-100 mt-2 ticket-btn">Get Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card movie-card bg-dark text-white h-100 shadow">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎬</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Movie Title</h5>
-                        <p class="card-text text-muted small">Drama | 1h 58m</p>
-                        <p class="card-text small text-light">A gripping story of love, loss and redemption.</p>
-                        <a asp-controller="Tickets" asp-action="Index" class="btn btn-sm w-100 mt-2 ticket-btn">Get Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card movie-card bg-dark text-white h-100 shadow">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎬</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Movie Title</h5>
-                        <p class="card-text text-muted small">Comedy | 1h 45m</p>
-                        <p class="card-text small text-light">A hilarious comedy that will have you laughing non stop.</p>
-                        <a asp-controller="Tickets" asp-action="Index" class="btn btn-sm w-100 mt-2 ticket-btn">Get Tickets</a>
+            @foreach (var movie in Model.NowShowing)
+            {
+                <div class="col-6 col-md-3">
+                    <div class="card movie-card bg-dark text-white h-100 shadow">
+                        <div class="poster-placeholder d-flex align-items-center justify-content-center">
+                            @if (!string.IsNullOrEmpty(movie.ImageUrl))
+                            {
+                                <img src="@movie.ImageUrl" alt="@movie.Title" />
+                            }
+                            else
+                            {
+                                <span class="fs-1">🎬</span>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@movie.Title</h5>
+                            <p class="card-text text-muted small">@movie.Genre | @movie.RuntimeMinutes min</p>
+                            <p class="card-text small text-light">
+                                @(movie.Description.Length > 90
+                                    ? movie.Description.Substring(0, 90) + "..."
+                                    : movie.Description)
+                            </p>
+                            <a asp-controller="Showtimes" asp-action="Index" class="btn btn-sm w-100 mt-2 ticket-btn">Get Tickets</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card movie-card bg-dark text-white h-100 shadow">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎬</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Movie Title</h5>
-                        <p class="card-text text-muted small">Thriller | 2h 05m</p>
-                        <p class="card-text small text-light">A heart pounding thriller that will leave you breathless.</p>
-                        <a asp-controller="Tickets" asp-action="Index" class="btn btn-sm w-100 mt-2 ticket-btn">Get Tickets</a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
 
-<!-- Coming Soon Section -->
-<section class="py-5 bg-dark text-white">
-    <div class="container">
-        <h2 class="fw-bold section-title border-bottom pb-2 mb-4">Coming Soon</h2>
-        <div class="row g-4">
-            <div class="col-6 col-md-3">
-                <div class="card bg-black text-white h-100 shadow coming-soon-card">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎥</span>
+@if (Model.ComingSoon.Any())
+{
+    <!-- Coming Soon Section -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <h2 class="fw-bold section-title border-bottom pb-2 mb-4">Coming Soon</h2>
+            <div class="row g-4">
+                @foreach (var movie in Model.ComingSoon)
+                {
+                    <div class="col-6 col-md-3">
+                        <div class="card bg-black text-white h-100 shadow coming-soon-card">
+                            <div class="poster-placeholder d-flex align-items-center justify-content-center">
+                                @if (!string.IsNullOrEmpty(movie.ImageUrl))
+                                {
+                                    <img src="@movie.ImageUrl" alt="@movie.Title" />
+                                }
+                                else
+                                {
+                                    <span class="fs-1">🎥</span>
+                                }
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@movie.Title</h5>
+                                <p class="card-text text-muted small">Release: @movie.ReleaseDate.ToString("MMMM yyyy")</p>
+                                <span class="badge w-100 py-2 coming-soon-badge">Coming Soon</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Movie Title</h5>
-                        <p class="card-text text-muted small">Release: July 2026</p>
-                        <span class="badge w-100 py-2 coming-soon-badge">Coming Soon</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card bg-black text-white h-100 shadow coming-soon-card">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎥</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Movie Title</h5>
-                        <p class="card-text text-muted small">Release: August 2026</p>
-                        <span class="badge w-100 py-2 coming-soon-badge">Coming Soon</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card bg-black text-white h-100 shadow coming-soon-card">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎥</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Movie Title</h5>
-                        <p class="card-text text-muted small">Release: September 2026</p>
-                        <span class="badge w-100 py-2 coming-soon-badge">Coming Soon</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card bg-black text-white h-100 shadow coming-soon-card">
-                    <div class="poster-placeholder d-flex align-items-center justify-content-center">
-                        <span class="fs-1">🎥</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Movie Title</h5>
-                        <p class="card-text text-muted small">Release: October 2026</p>
-                        <span class="badge w-100 py-2 coming-soon-badge">Coming Soon</span>
-                    </div>
-                </div>
+                }
             </div>
         </div>
+    </section>
+}
+<!-- Movie Reviews Section -->
+<section class="py-5 bg-black text-white">
+    <div class="container">
+
+        <h2 class="fw-bold section-title border-bottom pb-2 mb-4">
+            Movie Reviews
+        </h2>
+
+        <p class="text-light mb-4">
+            Share your movie theater experience with us.
+        </p>
+
+        <div class="card bg-dark text-white p-4 shadow mb-5">
+            <form id="reviewForm">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label for="reviewName" class="form-label">
+                            Name
+                        </label>
+
+                        <input type="text"
+                               id="reviewName"
+                               class="form-control"
+                               placeholder="Enter your name"
+                               required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="reviewRating" class="form-label">
+                            Rating
+                        </label>
+
+                        <select id="reviewRating"
+                                class="form-select"
+                                required>
+                            <option value="">Select a rating</option>
+                            <option value="5">★★★★★ - Excellent</option>
+                            <option value="4">★★★★☆ - Very Good</option>
+                            <option value="3">★★★☆☆ - Good</option>
+                            <option value="2">★★☆☆☆ - Fair</option>
+                            <option value="1">★☆☆☆☆ - Poor</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="reviewComment" class="form-label">
+                            Comment
+                        </label>
+
+                        <textarea id="reviewComment"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Write your review"
+                                  required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit"
+                                class="btn ticket-btn">
+                            Submit Review
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <h3 class="mb-4">Latest Reviews</h3>
+
+        <div id="reviewList">
+
+            <div class="card bg-dark text-white p-3 shadow mb-3">
+                <div class="d-flex justify-content-between">
+                    <strong>Sarah M.</strong>
+                    <span class="text-warning">★★★★★</span>
+                </div>
+
+                <p class="mb-0 mt-2">
+                    Great theater experience and comfortable seats.
+                </p>
+            </div>
+
+            <div class="card bg-dark text-white p-3 shadow mb-3">
+                <div class="d-flex justify-content-between">
+                    <strong>James T.</strong>
+                    <span class="text-warning">★★★★☆</span>
+                </div>
+
+                <p class="mb-0 mt-2">
+                    Ticket booking was easy and the movie was excellent.
+                </p>
+            </div>
+
+        </div>
+
     </div>
 </section>
+@section Scripts {
+    <script>
+        const reviewForm = document.getElementById("reviewForm");
+
+        reviewForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("reviewName").value;
+            const rating = Number(document.getElementById("reviewRating").value);
+            const comment = document.getElementById("reviewComment").value;
+
+            const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+            const reviewCard = document.createElement("div");
+            reviewCard.className =
+                "card bg-dark text-white p-3 shadow mb-3";
+
+            const reviewHeader = document.createElement("div");
+            reviewHeader.className =
+                "d-flex justify-content-between";
+
+            const reviewName = document.createElement("strong");
+            reviewName.textContent = name;
+
+            const reviewStars = document.createElement("span");
+            reviewStars.className = "text-warning";
+            reviewStars.textContent = stars;
+
+            const reviewComment = document.createElement("p");
+            reviewComment.className = "mb-0 mt-2";
+            reviewComment.textContent = comment;
+
+            reviewHeader.appendChild(reviewName);
+            reviewHeader.appendChild(reviewStars);
+
+            reviewCard.appendChild(reviewHeader);
+            reviewCard.appendChild(reviewComment);
+
+            document
+                .getElementById("reviewList")
+                .prepend(reviewCard);
+
+            reviewForm.reset();
+        });
+    </script>
+}

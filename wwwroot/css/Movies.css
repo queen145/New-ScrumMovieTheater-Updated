@@ -1,11 +1,62 @@
+.movie-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+    .movie-link:hover {
+        color: inherit;
+    }
+
+.movie-card {
+    background: var(--panel) !important;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 100%;
+    box-shadow: var(--shadow);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+    .movie-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--hairline-strong);
+        box-shadow: var(--shadow-lift);
+    }
+
+    .movie-card .card-img-top {
+        height: 340px !important;
+        object-fit: cover !important;
+        background-color: var(--velvet-deep) !important;
+        display: block;
+        transition: transform .35s ease;
+    }
+
+    .movie-card:hover .card-img-top {
+        transform: scale(1.04);
+    }
+
+    .movie-card .card-body {
+        border-top: 2px solid var(--brass);
+        padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .movie-card .card-title {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: .05em;
+        color: var(--paper);
+    }
+
 .theater-image {
     width: 100%;
     height: 400px;
     object-fit: cover;
-    border: 2px solid #e50914;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
 }
 
 thead tr th {
-    background-color: #e50914;
-    color: white;
+    background: linear-gradient(180deg, var(--velvet) 0%, var(--velvet-deep) 100%);
+    color: var(--brass);
 }

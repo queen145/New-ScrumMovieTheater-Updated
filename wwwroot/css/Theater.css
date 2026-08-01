@@ -1,121 +1,137 @@
-/* Theater Admin Pages */
-
 .theater-container {
-    background: #111;
-    padding: 30px;
-    border-radius: 12px;
-    color: white;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: transparent;
+    padding: 2.5rem 1.25rem 4rem;
+    border-radius: var(--radius);
+    color: var(--paper);
     margin-top: 20px;
 }
 
-
-    /* Title */
-
     .theater-container h2 {
-        color: #dc3545;
-        margin-bottom: 25px;
+        color: var(--paper);
+        margin-bottom: 1.5rem;
+        padding-bottom: .75rem;
+        border-bottom: 1px solid var(--hairline);
     }
 
-
-/* Add button */
-
 .theater-add-btn {
-    background: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
+    display: inline-block;
+    background: var(--brass);
+    color: var(--on-brass);
+    border: 1px solid var(--brass);
+    padding: .62rem 1.4rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
+    font-family: var(--font-data);
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-size: .85rem;
 }
 
     .theater-add-btn:hover {
-        background: #a71d2a;
-        color: white;
+        background: var(--brass-soft);
+        border-color: var(--brass-soft);
+        color: var(--on-brass);
     }
-
-
-/* Table */
 
 .theater-table {
     width: 100%;
-    background: #1c1c1c;
-    color: white;
-    border-radius: 10px;
+    background: var(--panel);
+    color: var(--paper);
+    border-radius: var(--radius);
     overflow: hidden;
 }
 
-
     .theater-table th {
-        background: #8b0000;
-        padding: 12px;
+        background: linear-gradient(180deg, var(--velvet) 0%, var(--velvet-deep) 100%);
+        color: var(--brass);
+        padding: .95rem 1.1rem;
     }
-
 
     .theater-table td {
-        padding: 12px;
-        border-bottom: 1px solid #333;
+        padding: .9rem 1.1rem;
+        border-bottom: 1px solid rgba(255,255,255,.06);
     }
-
 
     .theater-table tr:hover {
-        background: #252525;
+        background: rgba(255,214,150,.10);
     }
-
-
-/* Add/Edit Form */
 
 .theater-form {
-    background: #1c1c1c;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 600px;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    max-width: 640px;
+    box-shadow: var(--shadow);
 }
 
-
     .theater-form label {
-        color: white;
-        margin-bottom: 5px;
+        color: var(--brass);
+        margin-bottom: .4rem;
     }
-
 
     .theater-form input,
     .theater-form textarea {
-        background: #222;
-        color: white;
-        border: 1px solid #555;
-        border-radius: 6px;
+        background: rgba(255,255,255,.04);
+        color: var(--paper);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-sm);
     }
-
 
         .theater-form input:focus,
         .theater-form textarea:focus {
-            border-color: #dc3545;
+            border-color: var(--brass);
             outline: none;
         }
 
-
-/* Save button */
-
-.theater-save-btn {
-    background: #198754;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-}
-
-
-    .theater-save-btn:hover {
-        background: #146c43;
+    .theater-form textarea {
+        min-height: 110px;
     }
 
+.theater-save-btn {
+    display: inline-block;
+    background: var(--brass);
+    color: var(--on-brass);
+    border: 1px solid var(--brass);
+    padding: .62rem 1.4rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-family: var(--font-data);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-size: .85rem;
+    cursor: pointer;
+    margin-top: 1.25rem;
+}
 
-/* Cancel button */
+    .theater-save-btn:hover {
+        background: var(--brass-soft);
+        border-color: var(--brass-soft);
+        color: var(--on-brass);
+    }
 
 .theater-cancel-btn {
-    background: #6c757d;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
+    display: inline-block;
+    background: transparent;
+    color: var(--paper-dim);
+    border: 1px solid rgba(255,255,255,.2);
+    padding: .62rem 1.4rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
+    font-family: var(--font-data);
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-size: .85rem;
+    margin-top: 1.25rem;
 }
+
+    .theater-cancel-btn:hover {
+        background: rgba(255,255,255,.08);
+        border-color: rgba(255,255,255,.35);
+        color: var(--paper);
+    }
