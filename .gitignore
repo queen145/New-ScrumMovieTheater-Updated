@@ -382,6 +382,7 @@ __pycache__/
 # tools/**
 # !tools/packages.config
 
+# removed bin files and obj files manually.
 # Tabs Studio
 *.tss
 
