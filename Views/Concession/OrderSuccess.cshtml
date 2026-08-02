@@ -1,0 +1,73 @@
+@model ScrumMovieTheater.Models.Order
+
+@{
+    ViewData["Title"] = "Order Complete";
+
+    var total = Model.OrderItems.Sum(
+        item => item.Price * item.Quantity);
+}
+
+<div class="container py-5">
+    <div class="alert alert-success">
+        <h1>Order Completed</h1>
+
+        <p>
+            Your concession order was successfully placed.
+        </p>
+    </div>
+
+    <div class="card p-4">
+        <h3>Order #@Model.OrderId</h3>
+
+        <p>
+            Booking ID: @Model.BookingId
+        </p>
+
+        <p>
+            Date: @Model.OrderDate.ToString("g")
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>
+                            @item.ConcessionItem?.Name
+                        </td>
+
+                        <td>@item.Quantity</td>
+
+                        <td>
+                            @item.Price.ToString("C")
+                        </td>
+
+                        <td>
+                            @((item.Price * item.Quantity)
+                                .ToString("C"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3 class="text-end">
+            Total: @total.ToString("C")
+        </h3>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-primary">
+            Return Home
+        </a>
+    </div>
+</div>

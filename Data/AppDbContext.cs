@@ -27,6 +27,11 @@ namespace ScrumMovieTheater.Data
         public DbSet<Booking> Bookings { get; set; }
 
         public DbSet<Auditorium> Auditoriums { get; set; }
+        // added by Eugene
+        public DbSet<ConcessionItem> ConcessionItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        
        
         // Override the OnModelCreating method to configure the database schema
         // This method is called when the model is being created/initialized
@@ -37,8 +42,13 @@ namespace ScrumMovieTheater.Data
             modelBuilder.Entity<Theater>().ToTable("theater");
             modelBuilder.Entity<Movie>().ToTable("movie");
             modelBuilder.Entity<Showtime>().ToTable("showtimes");
+            // added by Eugene
+            modelBuilder.Entity<Booking>().ToTable("bookings");
             modelBuilder.Entity<Auditorium>().ToTable("auditorium");
-
+            // added by Eugene
+            modelBuilder.Entity<ConcessionItem>().ToTable("concessionitems");
+            modelBuilder.Entity<Order>().ToTable("orders");
+            modelBuilder.Entity<OrderItem>().ToTable("orderitems");
             modelBuilder.Entity<Theater>()
                 .HasKey(t => t.TheaterId);
 
@@ -47,6 +57,15 @@ namespace ScrumMovieTheater.Data
 
             modelBuilder.Entity<Auditorium>()
                .HasKey(a => a.AuditoriumId);
+               // Added by Eugene
+            modelBuilder.Entity<ConcessionItem>()
+               .HasKey(c => c.ConcessionItemId);
+
+            modelBuilder.Entity<Order>()
+               .HasKey(o => o.OrderId);
+
+            modelBuilder.Entity<OrderItem>()
+               .HasKey(oi => oi.OrderItemId);
 
             modelBuilder.Entity<Showtime>()
                 .HasOne(s => s.Movie)
@@ -69,6 +88,22 @@ namespace ScrumMovieTheater.Data
                .HasOne(a => a.Theater)
                .WithMany(t => t.Auditoriums)
                .HasForeignKey(a => a.TheaterId);
+                
+               // added by Eugene
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Booking)
+                .WithMany()
+                .HasForeignKey(o => o.BookingId);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.ConcessionItem)
+                .WithMany(c => c.OrderItems)
+                .HasForeignKey(oi => oi.ConcessionItemId);   
         }
     }
 }
