@@ -1,0 +1,74 @@
+@model ScrumMovieTheater.Models.ConcessionCheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4">Concession Checkout</h1>
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Subtotal.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3 class="text-end mb-4">
+        Total: @Model.Total.ToString("C")
+    </h3>
+
+    <form asp-controller="Concession"
+          asp-action="Checkout"
+          method="post">
+
+        <div class="mb-3">
+            <label asp-for="BookingId"
+                   class="form-label">
+            </label>
+
+            <input asp-for="BookingId"
+                   class="form-control"
+                   placeholder="Enter your booking ID" />
+
+            <span asp-validation-for="BookingId"
+                  class="text-danger">
+            </span>
+        </div>
+
+        <a asp-controller="Concession"
+           asp-action="Cart"
+           class="btn btn-secondary">
+            Return to Cart
+        </a>
+
+        <button type="submit"
+                class="btn btn-success">
+            Complete Order
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

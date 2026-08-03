@@ -1,0 +1,234 @@
+@model ScrumMovieTheater.Models.KioskMenuViewModel
+
+@{
+    ViewData["Title"] = "Movie Theater Kiosk";
+
+    string GetImage(string? name)
+    {
+        var itemName = name?.ToLower() ?? "";
+
+        if (itemName.Contains("popcorn"))
+            return "/images/concessions/popcorn.jpg";
+
+        if (itemName.Contains("drink") ||
+            itemName.Contains("soda"))
+            return "/images/concessions/drink.jpg";
+
+        if (itemName.Contains("candy"))
+            return "/images/concessions/candy.jpg";
+
+        if (itemName.Contains("nacho"))
+            return "/images/concessions/nachos.jpg";
+
+        if (itemName.Contains("hot dog") ||
+            itemName.Contains("hotdog"))
+            return "/images/concessions/hotdog.jpg";
+
+        return "/images/concessions/default.jpg";
+    }
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/kiosk.css"
+          asp-append-version="true" />
+}
+
+<div class="kiosk-page">
+
+    <header class="kiosk-header">
+        <h1 class="kiosk-title">
+            Movie Theater Kiosk
+        </h1>
+
+        <p class="kiosk-subtitle">
+            Touch a concession item to add it to your order
+        </p>
+    </header>
+
+    <!-- Kiosk progress bar -->
+    <div class="kiosk-progress">
+
+        <div class="kiosk-progress-step active">
+            <span class="kiosk-progress-number">1</span>
+            <span>Select Items</span>
+        </div>
+
+        <div class="kiosk-progress-line"></div>
+
+        <div class="kiosk-progress-step">
+            <span class="kiosk-progress-number">2</span>
+            <span>Review Order</span>
+        </div>
+
+        <div class="kiosk-progress-line"></div>
+
+        <div class="kiosk-progress-step">
+            <span class="kiosk-progress-number">3</span>
+            <span>Checkout</span>
+        </div>
+
+        <div class="kiosk-progress-line"></div>
+
+        <div class="kiosk-progress-step">
+            <span class="kiosk-progress-number">4</span>
+            <span>Complete</span>
+        </div>
+
+    </div>
+
+    @if (TempData["KioskMessage"] != null)
+    {
+        <div class="alert alert-success text-center fs-4">
+            @TempData["KioskMessage"]
+        </div>
+    }
+
+    <div class="kiosk-layout">
+
+        <!-- Product cards -->
+        <section class="kiosk-products">
+
+            @foreach (var item in Model.Concessions)
+            {
+                <article class="kiosk-card">
+
+                    <img src="@GetImage(item.Name)"
+                         alt="@item.Name"
+                         class="kiosk-product-image" />
+
+                    <h2>@item.Name</h2>
+
+                    <p class="kiosk-category">
+                        @item.Category
+                    </p>
+
+                    <p class="kiosk-price">
+                        @item.Price.ToString("C")
+                    </p>
+
+                    <form asp-controller="Kiosk"
+                          asp-action="AddToCart"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="concessionItemId"
+                               value="@item.ConcessionItemId" />
+
+                        <div class="kiosk-quantity-control">
+
+                            <button type="button"
+                                    class="kiosk-quantity-button"
+                                    onclick="changeQuantity(this, -1)">
+                                −
+                            </button>
+
+                            <input type="number"
+                                   name="quantity"
+                                   value="1"
+                                   min="1"
+                                   class="kiosk-quantity-input"
+                                   readonly />
+
+                            <button type="button"
+                                    class="kiosk-quantity-button"
+                                    onclick="changeQuantity(this, 1)">
+                                +
+                            </button>
+
+                        </div>
+
+                        <button type="submit"
+                                class="kiosk-add-button">
+                            Add to Order
+                        </button>
+
+                    </form>
+
+                </article>
+            }
+
+        </section>
+
+        <!-- Live order summary -->
+        <aside class="kiosk-cart-panel">
+
+            <h2>Your Order</h2>
+
+            @if (!Model.CartItems.Any())
+            {
+                <p class="kiosk-cart-message">
+                    Your order is empty.
+                </p>
+            }
+            else
+            {
+                <div class="mb-4">
+
+                    @foreach (var cartItem in Model.CartItems)
+                    {
+                        <div class="border-bottom py-3">
+
+                            <div class="d-flex justify-content-between">
+                                <strong>@cartItem.Name</strong>
+
+                                <strong>
+                                    @cartItem.Subtotal.ToString("C")
+                                </strong>
+                            </div>
+
+                            <div>
+                                Quantity: @cartItem.Quantity
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between fs-4">
+                    <strong>Items</strong>
+                    <strong>@Model.CartCount</strong>
+                </div>
+
+                <div class="d-flex justify-content-between fs-3 mt-3">
+                    <strong>Total</strong>
+                    <strong>@Model.Total.ToString("C")</strong>
+                </div>
+            }
+
+            <div class="mt-4">
+                <a asp-controller="Kiosk"
+                   asp-action="Cart"
+                   class="kiosk-cart-button">
+                    View Order
+                </a>
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function changeQuantity(button, amount) {
+            const form = button.closest("form");
+            const input = form.querySelector(".kiosk-quantity-input");
+
+            let quantity = parseInt(input.value) || 1;
+            quantity += amount;
+
+            if (quantity < 1) {
+                quantity = 1;
+            }
+
+            input.value = quantity;
+        }
+    </script>
+}

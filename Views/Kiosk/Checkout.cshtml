@@ -1,0 +1,135 @@
+@model ScrumMovieTheater.Models.ConcessionCheckoutViewModel
+
+@{
+    ViewData["Title"] = "Kiosk Checkout";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/kiosk.css"
+          asp-append-version="true" />
+}
+
+<div class="kiosk-page">
+
+    <header class="kiosk-header">
+        <h1 class="kiosk-title">
+            Complete Your Order
+        </h1>
+
+        <p class="kiosk-subtitle">
+            Review your total and enter your booking ID
+        </p>
+    </header>
+
+    <div class="kiosk-progress">
+
+        <div class="kiosk-progress-step complete">
+            <span class="kiosk-progress-number">✓</span>
+            <span>Select Items</span>
+        </div>
+
+        <div class="kiosk-progress-line"></div>
+
+        <div class="kiosk-progress-step complete">
+            <span class="kiosk-progress-number">✓</span>
+            <span>Review Order</span>
+        </div>
+
+        <div class="kiosk-progress-line"></div>
+
+        <div class="kiosk-progress-step active">
+            <span class="kiosk-progress-number">3</span>
+            <span>Checkout</span>
+        </div>
+
+        <div class="kiosk-progress-line"></div>
+
+        <div class="kiosk-progress-step">
+            <span class="kiosk-progress-number">4</span>
+            <span>Complete</span>
+        </div>
+
+    </div>
+
+    <div class="kiosk-cart-panel">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger fs-5 mb-4">
+        </div>
+
+        <h2>Order Summary</h2>
+
+        @foreach (var item in Model.CartItems)
+        {
+            <div class="border-bottom py-3">
+
+                <div class="d-flex justify-content-between">
+                    <strong>@item.Name</strong>
+
+                    <strong>
+                        @item.Subtotal.ToString("C")
+                    </strong>
+                </div>
+
+                <div>
+                    Quantity: @item.Quantity
+                </div>
+
+            </div>
+        }
+
+        <hr />
+
+        <div class="d-flex justify-content-between fs-2 mb-4">
+            <strong>Total</strong>
+            <strong>@Model.Total.ToString("C")</strong>
+        </div>
+
+        <form asp-controller="Kiosk"
+              asp-action="Checkout"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4">
+
+                <label asp-for="BookingId"
+                       class="form-label fs-3">
+                </label>
+
+                <input asp-for="BookingId"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your booking ID"
+                       inputmode="numeric" />
+
+                <span asp-validation-for="BookingId"
+                      class="text-danger fs-5">
+                </span>
+
+            </div>
+
+            <div class="d-flex justify-content-between gap-3 mt-5">
+
+                <a asp-controller="Kiosk"
+                   asp-action="Cart"
+                   class="btn btn-secondary btn-lg px-5">
+                    Back to Order
+                </a>
+
+                <button type="submit"
+                        class="kiosk-add-button">
+                    Complete Order
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
