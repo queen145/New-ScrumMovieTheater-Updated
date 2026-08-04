@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScrumMovieTheater.Data;
 using ScrumMovieTheater.Models;
 
 namespace ScrumMovieTheater.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
+    [Authorize(Roles = "Admin")]
     public class TheaterController : Controller
     {
         private readonly AppDbContext _context;

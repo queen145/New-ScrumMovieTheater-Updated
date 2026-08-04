@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScrumMovieTheater.Data;
 
 namespace ScrumMovieTheater.Areas.Manager.Controllers
 {
     [Area("Manager")]
+
+    [Authorize(Roles = "Manager")]
     public class InventoryTransactionController : Controller
     {
         private readonly AppDbContext _context;

@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScrumMovieTheater.Data;
+
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class HomeController : Controller
 {
     private readonly AppDbContext _context;

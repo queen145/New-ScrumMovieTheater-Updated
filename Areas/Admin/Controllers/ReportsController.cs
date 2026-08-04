@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScrumMovieTheater.Data;
 using ScrumMovieTheater.Models;
@@ -7,6 +8,8 @@ using System.Text;
 namespace ScrumMovieTheater.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
+    [Authorize(Roles = "Admin,Manager")]
     public class ReportsController : Controller
     {
         private readonly AppDbContext _context;
