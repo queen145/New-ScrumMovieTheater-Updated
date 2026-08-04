@@ -53,6 +53,43 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
             return View(report);
         }
+
+        public IActionResult ConcessionSales(DateTime? startDate, DateTime? endDate)
+        {
+            var orderItems = _context.OrderItems
+                .Include(o => o.Order)
+                .ThenInclude(o => o!.Booking)
+                .Include(o => o.ConcessionItem)
+                .AsQueryable();
+
+
+            if (startDate.HasValue)
+            {
+                orderItems = orderItems.Where(o =>
+                    o.Order!.OrderDate >= startDate.Value);
+            }
+
+
+            if (endDate.HasValue)
+            {
+                orderItems = orderItems.Where(o =>
+                    o.Order!.OrderDate <= endDate.Value);
+            }
+
+
+            var report = orderItems
+                .GroupBy(o => o.ConcessionItem!.Name)
+                .Select(g => new ConcessionSalesViewModel
+                {
+                    ItemName = g.Key,
+                    QuantitySold = g.Sum(x => x.Quantity),
+                    Revenue = g.Sum(x => x.Quantity * x.Price)
+                })
+                .ToList();
+
+
+            return View(report);
+        }
         // Method for exporting file
         public IActionResult ExportCsv()
         {
@@ -86,6 +123,45 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 Encoding.UTF8.GetBytes(csv.ToString()),
                 "text/csv",
                 "SalesReport.csv");
+        }
+
+        // Export and date method for concession sales
+        public IActionResult ExportConcessionCsv()
+        {
+            var report = _context.OrderItems
+                .Include(o => o.ConcessionItem)
+                .GroupBy(o => o.ConcessionItem!.Name)
+                .Select(g => new ConcessionSalesViewModel
+                {
+                    ItemName = g.Key,
+                    QuantitySold = g.Sum(x => x.Quantity),
+                    Revenue = g.Sum(x => x.Quantity * x.Price)
+                })
+                .ToList();
+
+
+            var csv = new StringBuilder();
+
+            csv.AppendLine("Item,Quantity Sold,Revenue");
+
+
+            foreach (var item in report)
+            {
+                csv.AppendLine(
+                    $"{item.ItemName},{item.QuantitySold},{item.Revenue}");
+            }
+
+
+            csv.AppendLine();
+
+            csv.AppendLine(
+                $"TOTAL,{report.Sum(x => x.QuantitySold)},{report.Sum(x => x.Revenue)}");
+
+
+            return File(
+                Encoding.UTF8.GetBytes(csv.ToString()),
+                "text/csv",
+                "ConcessionSalesReport.csv");
         }
     }
 }

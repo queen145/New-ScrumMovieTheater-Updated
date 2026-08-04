@@ -297,8 +297,7 @@ namespace ScrumMovieTheater.Controllers
                 {
                     var concession = await _context.ConcessionItems
                         .FirstOrDefaultAsync(c =>
-                            c.ConcessionItemId ==
-                                cartItem.ConcessionItemId &&
+                            c.ConcessionItemId == cartItem.ConcessionItemId &&
                             c.Active);
 
                     if (concession == null)
@@ -307,18 +306,56 @@ namespace ScrumMovieTheater.Controllers
                             "A concession item is unavailable.");
                     }
 
+
+                    // Get booking and theater information
+                    var booking = await _context.Bookings
+                        .Include(b => b.Showtime)
+                        .FirstOrDefaultAsync(b => b.Id == model.BookingId);
+
+                    if (booking == null || booking.Showtime == null)
+                    {
+                        throw new InvalidOperationException(
+                            "Booking information not found.");
+                    }
+
+
+                    // Find inventory for this theater
+                    var inventory = await _context.ConcessionInventories
+                        .FirstOrDefaultAsync(i =>
+                            i.ConcessionItemId == cartItem.ConcessionItemId &&
+                            i.TheaterId == booking.Showtime.TheaterId);
+
+
+                    if (inventory == null)
+                    {
+                        throw new InvalidOperationException(
+                            "Inventory record not found.");
+                    }
+
+
+                    // Check available stock
+                    if (inventory.QuantityOnHand < cartItem.Quantity)
+                    {
+                        throw new InvalidOperationException(
+                            $"{concession.Name} does not have enough stock.");
+                    }
+
+
+                    // Reduce inventory
+                    inventory.QuantityOnHand -= cartItem.Quantity;
+
+
+                    // Create order item
                     var orderItem = new OrderItem
                     {
                         OrderId = order.OrderId,
-                        ConcessionItemId =
-                            concession.ConcessionItemId,
+                        ConcessionItemId = concession.ConcessionItemId,
                         Quantity = cartItem.Quantity,
                         Price = concession.Price
                     };
 
                     _context.OrderItems.Add(orderItem);
                 }
-
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
@@ -334,7 +371,7 @@ namespace ScrumMovieTheater.Controllers
 
                 ModelState.AddModelError(
                     string.Empty,
-                    "The kiosk order could not be completed.");
+                    "The item is out of stock.");
 
                 return View(model);
             }

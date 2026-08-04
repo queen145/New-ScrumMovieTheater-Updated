@@ -45,6 +45,13 @@
                                class="btn btn-primary">
                                 Edit
                             </a>
+                            <a asp-action="Restock"
+                               asp-route-id="@item.InventoryId"
+                               class="btn btn-success">
+                                Restock
+                            </a>
+
+
                         </td>
                     </tr>
                 }

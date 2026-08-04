@@ -44,7 +44,7 @@
             @foreach (var auditorium in ViewBag.Auditoriums)
             {
                 <option value="@auditorium.AuditoriumId">
-                    @auditorium.Name
+                    @auditorium.Theater.Name - @auditorium.Name
                 </option>
             }
         </select>

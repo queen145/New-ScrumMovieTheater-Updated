@@ -216,9 +216,11 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
     {
         ViewBag.Movies = _context.Movies.ToList();
         ViewBag.Theaters = _context.Theaters.ToList(); // if you have Theater table
-        ViewBag.Auditoriums = _context.Auditoriums.ToList();
+        ViewBag.Auditoriums = _context.Auditoriums
+            .Include(a => a.Theater)
+            .ToList();
 
-        return View();
+            return View();
     }
 
     // post method for showtime
@@ -248,7 +250,9 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                         "This auditorium already has a showtime at this date and time.");
                     ViewBag.Movies = _context.Movies.ToList();
                     ViewBag.Theaters = _context.Theaters.ToList();
-                    ViewBag.Auditoriums = _context.Auditoriums.ToList();
+                    ViewBag.Auditoriums = _context.Auditoriums
+                        .Include(a => a.Theater)
+                        .ToList();
 
                     return View(showTime);
 
@@ -267,7 +271,9 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
             ViewBag.Movies = _context.Movies.ToList();
             ViewBag.Theaters = _context.Theaters.ToList();
-            ViewBag.Auditoriums = _context.Auditoriums.ToList();
+            ViewBag.Auditoriums = _context.Auditoriums
+                .Include(a => a.Theater)
+                .ToList();
 
             return View(showTime);
         }

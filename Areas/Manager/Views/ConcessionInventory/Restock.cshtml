@@ -1,0 +1,54 @@
+﻿@model ScrumMovieTheater.Models.ConcessionInventory
+
+<h2>Restock / Adjust Inventory</h2>
+
+<form asp-action="Restock" method="post">
+
+    <input type="hidden" asp-for="InventoryId" />
+
+
+    <div class="form-group">
+        <label>Concession Item</label>
+        <input value="@Model.ConcessionItem.Name"
+               class="form-control"
+               readonly />
+    </div>
+
+
+    <div class="form-group">
+        <label>Theater</label>
+        <input value="@Model.Theater.Name"
+               class="form-control"
+               readonly />
+    </div>
+
+
+    <div class="form-group">
+        <label>Current Quantity</label>
+        <input value="@Model.QuantityOnHand"
+               class="form-control"
+               readonly />
+    </div>
+
+
+    <div class="form-group">
+        <label>Quantity Change</label>
+        <input name="quantityChange"
+               class="form-control"
+               placeholder="Example: 50 or -10" />
+    </div>
+
+
+    <div class="form-group">
+        <label>Reason</label>
+        <input name="reason"
+               class="form-control"
+               placeholder="Weekly delivery, damaged items, adjustment..." />
+    </div>
+
+
+    <button type="submit" class="btn btn-success">
+        Save Restock
+    </button>
+
+</form>

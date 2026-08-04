@@ -46,14 +46,26 @@
 
         </a>
 
+        <a asp-area="Admin"
+           asp-controller="Reports"
+           asp-action="ConcessionSales"
+           class="card-box">
+
+            <div class="card-title">📊 Concession Sales</div>
+            <div class="card-text">
+                View concession sales and inventory reports
+            </div>
+
+        </a>
         <a asp-area="Manager"
-           asp-controller="Report"
+           asp-controller="InventoryTransaction"
            asp-action="Index"
            class="card-box">
 
-            <div class="card-title">📊 Reports</div>
+            <div class="card-title">📝 Inventory History</div>
+
             <div class="card-text">
-                View concession sales and inventory reports
+                View restock and adjustment history
             </div>
 
         </a>

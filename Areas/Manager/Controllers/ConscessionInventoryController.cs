@@ -63,5 +63,64 @@ namespace ScrumMovieTheater.Areas.Manager.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Restock get action
+        public async Task<IActionResult> Restock(int id)
+        {
+            var inventory = await _context.ConcessionInventories
+                .Include(x => x.ConcessionItem)
+                .Include(x => x.Theater)
+                .FirstOrDefaultAsync(x => x.InventoryId == id);
+
+            if (inventory == null)
+            {
+                return NotFound();
+            }
+
+            return View(inventory);
+        }
+
+        // Restock post method
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restock(
+             int id,
+             int quantityChange,
+             string reason)
+        {
+            var inventory = await _context.ConcessionInventories
+                .FirstOrDefaultAsync(x => x.InventoryId == id);
+
+            if (inventory == null)
+            {
+                return NotFound();
+            }
+
+
+            // Update current inventory
+            inventory.QuantityOnHand += quantityChange;
+
+
+            // Record transaction
+            var transaction = new InventoryTransaction
+            {
+                InventoryId = inventory.InventoryId,
+                QuantityChange = quantityChange,
+                Reason = reason,
+                Date = DateTime.Now
+            };
+
+
+            _context.InventoryTransactions.Add(transaction);
+
+            await _context.SaveChangesAsync();
+
+
+            TempData["SuccessMessage"] =
+                "Inventory restock recorded successfully!";
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

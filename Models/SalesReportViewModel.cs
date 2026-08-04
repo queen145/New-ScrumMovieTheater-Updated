@@ -1,4 +1,8 @@
-﻿namespace ScrumMovieTheater.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using ScrumMovieTheater.Models;
+
+namespace ScrumMovieTheater.Models
 {
     public class SalesReportViewModel
     {

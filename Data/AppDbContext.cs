@@ -32,7 +32,7 @@ namespace ScrumMovieTheater.Data
 
         public DbSet<ConcessionInventory> ConcessionInventories { get; set; }
 
-       // public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+        public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
 
         // added by Eugene
         public DbSet<Order> Orders { get; set; }
@@ -52,7 +52,7 @@ namespace ScrumMovieTheater.Data
             modelBuilder.Entity<Auditorium>().ToTable("auditorium");
             modelBuilder.Entity<ConcessionItem>().ToTable("concessionitems");
             modelBuilder.Entity<ConcessionInventory>().ToTable("concessioninventory");
-         //   modelBuilder.Entity<InventoryTransaction>().ToTable("inventorytransactions");
+            modelBuilder.Entity<InventoryTransaction>().ToTable("inventorytransactions");
 
             // added by Eugene
             modelBuilder.Entity<Order>().ToTable("orders");

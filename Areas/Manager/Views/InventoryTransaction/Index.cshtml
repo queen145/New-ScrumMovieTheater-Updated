@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.InventoryTransaction>
+
+<h2>Inventory Transaction History</h2>
+
+<div class="manager-card">
+
+    <div class="card-header">
+        <h5>Restock & Adjustment Log</h5>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Item</th>
+                    <th>Theater</th>
+                    <th>Quantity Change</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("MM/dd/yyyy hh:mm tt")</td>
+
+                        <td>@item.Inventory?.ConcessionItem?.Name</td>
+
+                        <td>@item.Inventory?.Theater?.Name</td>
+
+                        <td>
+                            @(item.QuantityChange > 0
+                                ? $"+{item.QuantityChange}"
+                                : item.QuantityChange.ToString())
+                        </td>
+
+                        <td>@item.Reason</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
