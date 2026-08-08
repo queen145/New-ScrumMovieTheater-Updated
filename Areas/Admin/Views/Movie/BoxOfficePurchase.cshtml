@@ -22,6 +22,7 @@
        These currently use href="#" as placeholders — replace with a real route when available. *@
     @foreach (var name in ViewBag.TheaterNames)
     {
+        @* when you call a function we use input to specify paramater values.  *@
         @using (Html.BeginForm("pickTheater", "Movie", FormMethod.Post))
         {   <input type="hidden" name="selectedTheater" value="@name"/>
             <button class="btn btn-danger" type="submit" role="button">@name</button>   
@@ -96,7 +97,7 @@
                 {
                     var dt = DateTime.Today.AddDays(i);
                     var theater = ViewBag.SelectedTheater; 
-                    @using(Html.BeginForm("selectMovieDate", "Movie", FormMethod.Post))
+                    @using(Html.BeginForm("selectedMovieDate", "Movie", FormMethod.Post))
                     {
                         // I need you to capture information on my webpage and not leave anything visible on the screen.
                         // form actions 
@@ -229,6 +230,7 @@
             <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
                 <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
                 so they remain visible even when the sliding content is clipped. -->
+
                 <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
 
                 <!-- The viewport that clips the sliding .menu -->
@@ -236,13 +238,23 @@
                     <div id="menu" class="menu" role="list">
                         @* Generate a fixed number of date items starting from today.
                             Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
+
+                
                         @foreach (var movie in ViewBag.Movies)
                         {
+                            
+                            var theater = ViewBag.SelectedTheater; 
 
-                            <div class="btn btn-danger" role="listitem">
-                                <div class="menu-item-day">@movie</div>
+                            @using (Html.BeginForm("selectedMovie", "Movie", FormMethod.Post))
+                            {
+                                <input type="hidden" name="selectedTheaterId" value="@ViewBag.TheaterId" />
+                                <input type="hidden" name="date" value="@ViewBag.date"  />
+                                <input type="hidden" name="movieTitle" value="@movie" />
 
-                            </div>
+                                <button class="btn btn-danger" type="submit" role="listitem">
+                                    <div class="menu-item-day">@movie</div>
+                                </button>
+                            }
                         }
                     </div>
             </div>
@@ -251,39 +263,39 @@
         </div>
     </div>
 
-        <div class="container">
+    @if (ViewBag.Showtimes != null)
+    {
+            <div class="container">
 
-            <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
-                <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
-             so they remain visible even when the sliding content is clipped. -->
-                <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
+                <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
+                    <!-- Prev/Next controls are placed outside the overflowed .menu-wrapper
+                    so they remain visible even when the sliding content is clipped. -->
+                    <button class="btn btn-dark" id="prevButton" type="button" aria-label="Previous">Prev</button>
 
-                <!-- The viewport that clips the sliding .menu -->
-                <div class="menu-wrapper mt-3" id="menuWrapper" aria-hidden="false">
-                    <div id="menu" class="menu" role="list">
-                        @* Generate a fixed number of date items starting from today.
+                    <!-- The viewport that clips the sliding .menu -->
+                    <div class="menu-wrapper mt-3" id="menuWrapper" aria-hidden="false">
+                        <div id="menu" class="menu" role="list">
+                            @* Generate a fixed number of date items starting from today.
                             Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
-                        @foreach (var showtime in new[]{"8:00AM", "10:30AM", "16:30PM", "17:00PM"})
-                        {
+                            @foreach (var showtime in ViewBag.Showtimes)
+                            {
 
-                            <div class="btn btn-danger" role="listitem">
-                                <div class="menu-item-day">@showtime</div>
+                                <button class="btn btn-danger" role="listitem">
+                                    <div class="menu-item-day">@showtime</div>
 
-                            </div>
-                        }
+                                </button>
+                            }
+                        </div>
                     </div>
+                    <button class="btn btn-dark" id="nextButton" type="button" aria-label="Next">Next</button>
+
                 </div>
-                <button class="btn btn-dark" id="nextButton" type="button" aria-label="Next">Next</button>
-
             </div>
-        </div>
-
-    
+    }
 
 
 
-
-}
+    }
 
 }
 

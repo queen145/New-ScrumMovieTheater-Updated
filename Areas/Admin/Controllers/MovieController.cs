@@ -333,6 +333,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 .Select(m => m.Title)
                 .Distinct()
                 .ToListAsync();
+
          
 
         return View();
@@ -354,7 +355,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> selectMovieDate(string selectedTheater, DateTime date) 
+        public async Task<IActionResult> selectedMovieDate(string selectedTheater, DateTime date) 
         {
             ViewBag.SelectedTheater = selectedTheater;
             ViewBag.TheaterNames = new List<string> { selectedTheater };
@@ -386,24 +387,44 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> selectMovie(string selectedTheaterId, DateTime date, string movieTitle)
+        public async Task<IActionResult> selectedMovie(string selectedTheaterId, DateTime date, string movieTitle)
         {
-            var theaterId = int.Parse(selectedTheaterId); 
-            
+
+            var theaterId = int.Parse(selectedTheaterId);
+
+            var theaterName = await _context.Theaters
+                .Where(t => t.TheaterId == int.Parse(selectedTheaterId))
+                .Select(t => t.Name)
+                .FirstOrDefaultAsync();
+
+            /* look at the view for the left side of the equation.look at the LINQ query that coreesponds for the variable. */
+
+            ViewBag.SelectedTheater = theaterName;
+
+            ViewBag.TheaterNames = new List<string> { theaterName };
 
             var movieId = await _context.Movies
                 .Where(m => m.Title == movieTitle)
                 .Select(m => m.MovieId)
                 .FirstOrDefaultAsync();
 
+            
             var showtimes = await _context.Showtimes
                 .Where(s => movieId == s.MovieId)
                 .Where(s => s.TheaterId == theaterId)
                 .Where(s => s.ShowDate == date)
                 .Select(s => s.TimeSlot)
-                .ToListAsync(); 
+                .ToListAsync();
 
-            ViewBag.Showtimes = showtimes; 
+            
+            ViewBag.Movies = movieId;  
+            ViewBag.Date = date;
+            ViewBag.MovieId = movieId; 
+            ViewBag.Movies = new List<string> { movieTitle };
+            ViewBag.Showtimes = showtimes;
+
+
+
             return View("BoxOfficePurchase");
         }
 
