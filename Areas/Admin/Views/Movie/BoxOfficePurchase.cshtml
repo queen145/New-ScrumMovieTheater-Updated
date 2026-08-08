@@ -242,13 +242,13 @@
                 
                         @foreach (var movie in ViewBag.Movies)
                         {
-                            
-                            var theater = ViewBag.SelectedTheater; 
+
+                            var theater = ViewBag.SelectedTheater;
 
                             @using (Html.BeginForm("selectedMovie", "Movie", FormMethod.Post))
                             {
                                 <input type="hidden" name="selectedTheaterId" value="@ViewBag.TheaterId" />
-                                <input type="hidden" name="date" value="@ViewBag.date"  />
+                                <input type="hidden" name="date" value="@ViewBag.date" />
                                 <input type="hidden" name="movieTitle" value="@movie" />
 
                                 <button class="btn btn-danger" type="submit" role="listitem">
@@ -279,11 +279,20 @@
                             Each item gets a data-day attribute (yyyy-MM-dd) we can use in JS. *@
                             @foreach (var showtime in ViewBag.Showtimes)
                             {
+                                @using (Html.BeginForm("selectedShowtime", "Movie", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="selectedTheaterId" value="@ViewBag.TheaterId" />
+                                    <input type="hidden" name="date" value="ViewBag.Date" />
+                                    <input type="hidden" name="selectedMovieId" value="@ViewBag.MovieId" />
+                                    <input type="hidden" name="selectedShowtime" value="@showtime" />
 
-                                <button class="btn btn-danger" role="listitem">
-                                    <div class="menu-item-day">@showtime</div>
+                                    <button class="btn btn-danger" type="submit" role="listitem">
+                                        <div class="menu-item-day">@showtime</div>
+                                    </button>
+                                
+                                }
 
-                                </button>
+
                             }
                         </div>
                     </div>
@@ -292,6 +301,12 @@
                 </div>
             </div>
     }
+
+    <button>Ticket Number</button>
+
+
+
+    
 
 
 

@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using ScrumMovieTheater.Data;
 using ScrumMovieTheater.Models;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace ScrumMovieTheater.Areas.Admin.Controllers
@@ -344,6 +347,13 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             return View();
         }
 
+        /* 
+         These methods depend on each other to find information from the database so that the user can make choices on the webpage. When the user makes a choice, that choice is stored on the webpage and can be used as a paramter for the next method. That next method will be responsbile for the next choice. Understand that you don't need to repeat queries. 
+        Other names for this pattern are called progressive disclousre or multi step checkout. 
+
+        Also note that parameters increase and are in order. 
+         
+         */
         [HttpPost]
         public  IActionResult pickTheater(string selectedTheater)
         {
@@ -416,8 +426,8 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 .Select(s => s.TimeSlot)
                 .ToListAsync();
 
-            
-            ViewBag.Movies = movieId;  
+
+            ViewBag.TheaterId = theaterId;  
             ViewBag.Date = date;
             ViewBag.MovieId = movieId; 
             ViewBag.Movies = new List<string> { movieTitle };
@@ -427,6 +437,69 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
             return View("BoxOfficePurchase");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> selectedShowtime(string selectedTheaterId, DateTime date, string selectedMovieId, string selectedShowtime)
+        {
+            var theaterId = int.Parse(selectedTheaterId);
+            var movieId = int.Parse(selectedMovieId);
+            var showtime = TimeSpan.Parse(selectedShowtime); 
+
+        /* We queried this information in a prior method call and sent it over. There is no need for the
+              query to run in this application but its saved here in comments so that you know Andrew thought about it. (thanks Joseph)
+        */
+            var theaterName = await _context.Theaters
+                .Where(t => t.TheaterId == int.Parse(selectedTheaterId))
+                .Select(t => t.Name)
+                .FirstOrDefaultAsync();
+            
+
+
+
+            /* We queried this information in a prior method call and sent it over. There is no need for the 
+             * query to run in this application but its saved here in comments so that you know Andrew thought about it. (thanks Joseph) 
+             
+            var movieId = await _context.Movies
+                .Where(m => m.Title == movieTitle)
+                .Select(m => m.MovieId)
+                .FirstOrDefaultAsync();
+            */
+
+            var movieTitle = await _context.Movies
+                .Where(m => m.MovieId == movieId)
+                .Select(m => m.Title)
+                .FirstOrDefaultAsync();
+            
+            /*This underscore is provided to this variable because we use this selectedShowtime naming conventino for something else. 
+             TODO: Come back later and implement microsoft best practices for naming conventions. 
+
+             */
+            var selectedShowtimeId = await _context.Showtimes
+                .Where(s => movieId == s.MovieId)
+                .Where(s => s.TheaterId == theaterId)
+                .Where(s => s.ShowDate == date)
+                .Where(s => s.TimeSlot == showtime)
+                .Select(s => s.Id)
+                .FirstOrDefaultAsync();
+
+            /* 
+             Id's are easy to transmit. These particular View Bag options in this comment section are user choices.
+             */
+            ViewBag.TheaterId = theaterId; 
+            ViewBag.Date = date;
+            ViewBag.MovieId = movieId;
+            ViewBag.ShowtimeId = selectedShowtimeId;
+
+            /* we need to display these bits of information on the webpage */ 
+            ViewBag.Movies = new List<string> { movieTitle };
+            ViewBag.Showtimes = new List<string> { selectedShowtime };
+            ViewBag.SelectedTheater = theaterName;
+            ViewBag.TheaterNames = new List<string> { theaterName };
+
+            return View("BoxOfficePurchase");
+        }
+
+
 
 
 
