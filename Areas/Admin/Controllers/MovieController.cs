@@ -444,6 +444,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             var theaterId = int.Parse(selectedTheaterId);
             var movieId = int.Parse(selectedMovieId);
             var showtime = TimeSpan.Parse(selectedShowtime); 
+            
 
         /* We queried this information in a prior method call and sent it over. There is no need for the
               query to run in this application but its saved here in comments so that you know Andrew thought about it. (thanks Joseph)
@@ -470,16 +471,15 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 .Select(m => m.Title)
                 .FirstOrDefaultAsync();
             
-            /*This underscore is provided to this variable because we use this selectedShowtime naming conventino for something else. 
+            /* 
              TODO: Come back later and implement microsoft best practices for naming conventions. 
 
              */
-            var selectedShowtimeId = await _context.Showtimes
+            var selectedShowtimeInfo = await _context.Showtimes
                 .Where(s => movieId == s.MovieId)
                 .Where(s => s.TheaterId == theaterId)
                 .Where(s => s.ShowDate == date)
                 .Where(s => s.TimeSlot == showtime)
-                .Select(s => s.Id)
                 .FirstOrDefaultAsync();
 
             /* 
@@ -488,7 +488,8 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             ViewBag.TheaterId = theaterId; 
             ViewBag.Date = date;
             ViewBag.MovieId = movieId;
-            ViewBag.ShowtimeId = selectedShowtimeId;
+            ViewBag.ShowtimeId = selectedShowtimeInfo.Id;
+            ViewBag.ShowtimePrice = selectedShowtimeInfo.Price; 
 
             /* we need to display these bits of information on the webpage */ 
             ViewBag.Movies = new List<string> { movieTitle };
@@ -498,10 +499,6 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
 
             return View("BoxOfficePurchase");
         }
-
-
-
-
 
     }
     
