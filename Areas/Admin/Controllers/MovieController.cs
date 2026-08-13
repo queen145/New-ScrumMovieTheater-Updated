@@ -499,11 +499,26 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             ViewBag.TheaterNames = new List<string> { theaterName };
 
 
-            var capacity = selectedShowtimeInfo.Auditorium.Capacity;
+            var maxCapacity = selectedShowtimeInfo.Auditorium.Capacity;
+            var currentCapactiy = selectedShowtimeInfo.Auditorium.Capacity;
 
+            // SELECT 
+            // FROM 
+            // USE the first letter of the thing you r
+            var auditoriumCapactiy =  _context.Bookings
+                                        .Where(b => b.ShowtimeId == selectedShowtimeInfo.Id)
+                                        .Sum(b => b.Adults + b.Kids); 
 
             return View("BoxOfficePurchase");
-        }
+
+        //    MAKE A FUNCTION than make the lambda.
+        //    public calcTickets(Booking b)
+        //{
+        //    int totalTickets = b.adults + b.kids
+        //        return totalTickets
+
+        //}
+    }
 
     }
     
