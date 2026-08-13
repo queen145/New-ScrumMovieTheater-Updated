@@ -480,6 +480,7 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 .Where(s => s.TheaterId == theaterId)
                 .Where(s => s.ShowDate == date)
                 .Where(s => s.TimeSlot == showtime)
+                .Include(s => s.Auditorium)
                 .FirstOrDefaultAsync();
 
             /* 
@@ -496,6 +497,10 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             ViewBag.Showtimes = new List<string> { selectedShowtime };
             ViewBag.SelectedTheater = theaterName;
             ViewBag.TheaterNames = new List<string> { theaterName };
+
+
+            var capacity = selectedShowtimeInfo.Auditorium.Capacity;
+
 
             return View("BoxOfficePurchase");
         }
