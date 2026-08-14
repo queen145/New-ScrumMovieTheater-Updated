@@ -209,11 +209,49 @@ namespace ScrumMovieTheater.Controllers
 
                 foreach (var cartItem in cart)
                 {
+                    // Find booking theater
+                    var booking = await _context.Bookings
+                        .Include(b => b.Showtime)
+                        .FirstOrDefaultAsync(b => b.Id == model.BookingId);
+
+                    if (booking == null || booking.Showtime == null)
+                    {
+                        throw new InvalidOperationException(
+                            "Booking information not found.");
+                    }
+
+
+                    // Find inventory for this theater and item
+                    var inventory = await _context.ConcessionInventories
+                        .FirstOrDefaultAsync(i =>
+                            i.ConcessionItemId == cartItem.ConcessionItemId &&
+                            i.TheaterId == booking.Showtime.TheaterId);
+
+
+                    if (inventory == null)
+                    {
+                        throw new InvalidOperationException(
+                            "Inventory record not found.");
+                    }
+
+
+                    // Check stock
+                    if (inventory.QuantityOnHand < cartItem.Quantity)
+                    {
+                        throw new InvalidOperationException(
+                            $"{cartItem.Name} does not have enough stock.");
+                    }
+
+
+                    // Reduce inventory
+                    inventory.QuantityOnHand -= cartItem.Quantity;
+
+
+                    // Create order item
                     var orderItem = new OrderItem
                     {
                         OrderId = order.OrderId,
-                        ConcessionItemId =
-                            cartItem.ConcessionItemId,
+                        ConcessionItemId = cartItem.ConcessionItemId,
                         Quantity = cartItem.Quantity,
                         Price = cartItem.Price
                     };
@@ -236,7 +274,7 @@ namespace ScrumMovieTheater.Controllers
 
                 ModelState.AddModelError(
                     string.Empty,
-                    "The order could not be completed. Please try again.");
+                    "The order is out of stock. Please try again later.");
 
                 return View(model);
             }

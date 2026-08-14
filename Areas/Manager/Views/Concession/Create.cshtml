@@ -1,0 +1,88 @@
+﻿@model ScrumMovieTheater.Models.ConcessionItem
+
+<h2>Add Concession Item</h2>
+
+<div class="manager-card">
+
+    <div class="card-header">
+        <h5>Concession Item Details</h5>
+    </div>
+
+
+    <div class="card-body">
+
+        <form asp-area="Manager"
+              asp-controller="Concession"
+              asp-action="Create"
+              method="post">
+
+
+            <div class="mb-3">
+                <label class="form-label">Item Name</label>
+
+                <input asp-for="Name"
+                       class="form-control" />
+
+                <span asp-validation-for="Name"
+                      class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+
+                <input asp-for="Category"
+                       class="form-control" />
+
+                <span asp-validation-for="Category"
+                      class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+
+                <input asp-for="Price"
+                       class="form-control" />
+
+                <span asp-validation-for="Price"
+                      class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Low Stock Threshold</label>
+
+                <input asp-for="LowStockThreshold"
+                       class="form-control" />
+            </div>
+
+
+            <div class="form-check mb-3">
+                <input asp-for="Active"
+                       class="form-check-input" />
+
+                <label class="form-check-label">
+                    Active
+                </label>
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn btn-success">
+                Add Concession Item
+            </button>
+
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+
+        </form>
+
+    </div>
+
+</div>

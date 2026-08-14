@@ -1,7 +1,13 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ScrumMovieTheater.Models
 {
+    [Table("concessionitems")]
     public class ConcessionItem
     {
+        [Key]
         public int ConcessionItemId { get; set; }
 
         public string Name { get; set; } = string.Empty;
@@ -16,5 +22,6 @@ namespace ScrumMovieTheater.Models
 
         public ICollection<OrderItem> OrderItems { get; set; }
             = new List<OrderItem>();
+
     }
 }
