@@ -498,6 +498,16 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             ViewBag.SelectedTheater = theaterName;
             ViewBag.TheaterNames = new List<string> { theaterName };
 
+            // TODO update database with an adult price. 
+            ViewBag.TotalAdultTicketPrice = selectedShowtimeInfo.Price;
+
+            // TODO update database with an adult price. 
+            ViewBag.TotalChildTicketPrice = selectedShowtimeInfo.Price;
+
+            decimal totalTicketPrice = ViewBag.TotalAdultTicketPrice * ViewBag.TotalChildTicketPrice;
+
+            string totalTicketPriceOutput = totalTicketPrice.ToString("C2");
+            ViewBag.TotalPrice = totalTicketPriceOutput;
 
             var maxCapacity = selectedShowtimeInfo.Auditorium.Capacity;
             var currentCapactiy = selectedShowtimeInfo.Auditorium.Capacity;
@@ -505,9 +515,15 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             // SELECT 
             // FROM 
             // USE the first letter of the thing you r
-            var auditoriumCapactiy =  _context.Bookings
+            var auditoriumCapacity =  _context.Bookings
                                         .Where(b => b.ShowtimeId == selectedShowtimeInfo.Id)
-                                        .Sum(b => b.Adults + b.Kids); 
+                                        .Sum(b => b.Adults + b.Kids);
+
+            var remainingCapacity = maxCapacity - auditoriumCapacity; 
+
+            ViewBag.AuditoriumMaxCapacity = maxCapacity;
+            ViewBag.AuditoriumCapacity = auditoriumCapacity;
+            ViewBag.RemainingCapacity = remainingCapacity; 
 
             return View("BoxOfficePurchase");
 

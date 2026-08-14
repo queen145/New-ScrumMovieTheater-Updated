@@ -307,40 +307,94 @@
     
         @if (ViewBag.ShowtimeId != null && ViewBag.ShowtimePrice != null)
         {
-            <div class="container border-white mt-5">
+            <div class="container border-white">
 
                 <!-- Info box with white border matching your theater button styling Uses custom CSS for full control and comments -->
                 <div class="info-box-white p-4 mt-4">
                     <!-- Display ViewBag data inside the white bordered box Only show if we have selected theater -->
                     @if (!string.IsNullOrEmpty(ViewBag.SelectedTheater))
                     {
-                        <h3>Here are your purchase details so far.</h3>
+                        <h3 class="mb-5">Here are your purchase details so far.</h3>
                         /*Confirming the movie selection  */
                         
                         
                         /* I NEED TO MAKE A FUNCTION TO CALCUALTE THE PRICE PER TICKET AND SHOW THAT ON THE PAGE. I MAY NEED 
                         TO CREATE A FAKE BOOKING ID. */
-                       
-                        <div class="form-group">
+                  <div class="container">
+                        <div class="form-group d-flex">
 
-                            <p>Number of Adult Tickets:</p>
+                            <p class="mt-3">Adult Tickets:</p>
+                           
 
                             <input type="number"
-                                   id="ticketQuantity"
+                                   id="AdultTicketQuantity"
                                    name="ticketQuantity"
-                                   min="1"
-                                   max="10"
-                                   value="1"
+                                   min="0"
+                                   max="100"
+                                   value="0"
                                    class="form-control"
                                    style="width: 100px;" />
 
-                            <p class="mt-3">Price per ticket:</p>
+                                <span class="adultMoviePricing mt-3"></span>
+                                <span> X </span>
+                                <span class="adultMoviePricing">@ViewBag.TotalAdultTicketPrice</span>
+                                <span>=</span>
+                                <span class="adultTicketSubtotal">Subtotal</span>
+
+                               
                         
+                        </div>
+
+                        <div class="form-group d-flex">
+
+                                <p class="mt-3">Child Tickets:</p>
+
+                                <input type="number"
+                                       id="ChildTicketQuantity"
+                                       name="ticketQuantity"
+                                       min="0"
+                                       max="100"
+                                       value="0"
+                                       class="form-control"
+                                       style="width: 100px;" />
+
+                                <p class="childMoviePricing mt-3">@ViewBag.ShowtimePrice </p>
+
+                        </div>
+                            
+                            <div class="form-group d-flex">
+                                <p>Total Price: TODO</p>
+                                <p></p>
+                             </div>
+
+                </div>
+
+                        <div class="container">
+                            <h3 class="mt-5">The Remaining Capacity is @ViewBag.RemainingCapacity</h3>
                         </div>
                         
                     }
                 </div>
+                @section Scripts {
+                <script>
+                        $(document).ready(function() { 
+                            $("#AdultTicketQuantity").on("change", function(){
+                                let adultTicketCount = $(this).val(); 
+                                    console.log(adultTicketCount);
 
+                                let adultPrice = $(".adultMoviePricing").text();
+                                console.log(adultPrice);
+
+                                let adultTicketPricing = adultTicketCount * adultPrice; 
+                                console.log(adultTicketPricing); 
+                                    //please see https://stackoverflow.com/questions/35073531/how-to-trigger-onchange-when-the-page-load
+                                $(".adultTicketSubtotal").text(adultTicketPricing);
+                                    }).change();
+
+                           
+                        });
+                </script>
+                }
                 <style>
                         /*
                                                        White bordered container for displaying information
