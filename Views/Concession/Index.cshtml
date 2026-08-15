@@ -1,0 +1,76 @@
+@model IEnumerable<ScrumMovieTheater.Models.ConcessionItem>
+
+@{
+    ViewData["Title"] = "Concessions";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4">Concessions</h1>
+    <div class="d-flex justify-content-end mb-4">
+    <a asp-controller="Concession"
+       asp-action="Cart"
+       class="btn btn-light px-4 py-2 fw-bold">
+        View Cart
+    </a>
+</div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <a asp-controller="Concession"
+       asp-action="Cart"
+       class="btn btn-warning mb-4">
+        View Cart
+    </a>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body">
+                        <h3 class="card-title">@item.Name</h3>
+
+                        <p class="text-muted">
+                            @item.Category
+                        </p>
+
+                        <p class="fw-bold fs-4">
+                            @item.Price.ToString("C")
+                        </p>
+
+                        <form asp-controller="Concession"
+                              asp-action="AddToCart"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="concessionItemId"
+                                   value="@item.ConcessionItemId" />
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Quantity
+                                </label>
+
+                                <input type="number"
+                                       name="quantity"
+                                       min="1"
+                                       value="1"
+                                       class="form-control" />
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100">
+                                Add to Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

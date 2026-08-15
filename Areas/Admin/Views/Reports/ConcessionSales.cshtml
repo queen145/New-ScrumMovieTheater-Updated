@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.ConcessionSalesViewModel>
+
+@{
+    ViewData["Title"] = "Concession Sales Report";
+}
+
+<h2>🍿 Concession Sales Report</h2>
+
+<form method="get" asp-action="ConcessionSales">
+
+    <label>Start Date:</label>
+    <input type="date" name="startDate" />
+
+    <label>End Date:</label>
+    <input type="date" name="endDate" />
+
+    <button type="submit" class="btn btn-primary">
+        Search
+    </button>
+
+</form>
+
+<br />
+
+<a asp-action="ExportConcessionCsv"
+   class="btn btn-success">
+    Export CSV
+</a>
+
+
+<div class="manager-card">
+
+    <div class="card-header">
+        <h5>Concession Sales</h5>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity Sold</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.QuantitySold</td>
+                        <td>@item.Revenue.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th>
+                        @Model.Sum(x => x.QuantitySold)
+                    </th>
+                    <th>
+                        @Model.Sum(x => x.Revenue).ToString("C")
+                    </th>
+                </tr>
+            </tfoot>
+
+        </table>
+
+    </div>
+
+</div>

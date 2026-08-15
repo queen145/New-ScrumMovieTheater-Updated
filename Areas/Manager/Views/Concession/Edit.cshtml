@@ -1,0 +1,81 @@
+﻿@model ScrumMovieTheater.Models.ConcessionItem
+
+<h2>Edit Concession Item</h2>
+
+<div class="manager-card">
+
+    <div class="card-header">
+        <h5>Edit Item</h5>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-area="Manager"
+              asp-controller="Concession"
+              asp-action="Edit"
+              method="post">
+
+            <input type="hidden" asp-for="ConcessionItemId" />
+
+
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+
+                <input asp-for="Name"
+                       class="form-control" />
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+
+                <input asp-for="Category"
+                       class="form-control" />
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+
+                <input asp-for="Price"
+                       class="form-control" />
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Low Stock Threshold
+                </label>
+
+                <input asp-for="LowStockThreshold"
+                       class="form-control" />
+            </div>
+
+
+            <div class="form-check mb-3">
+
+                <input asp-for="Active"
+                       class="form-check-input" />
+
+                <label class="form-check-label">
+                    Active
+                </label>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-success">
+                Save Changes
+            </button>
+
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.ConcessionInventory>
+
+<h2>⚠ Low Stock Alerts</h2>
+
+<div class="manager-card">
+
+    <div class="card-header">
+        <h5>Items Below Stock Threshold</h5>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Theater</th>
+                    <th>Quantity On Hand</th>
+                    <th>Threshold</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.ConcessionItem?.Name</td>
+
+                        <td>@item.Theater?.Name</td>
+
+                        <td>@item.QuantityOnHand</td>
+
+                        <td>@item.ConcessionItem?.LowStockThreshold</td>
+
+                        <td>
+                            <span class="badge bg-danger">
+                                Low Stock
+                            </span>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
