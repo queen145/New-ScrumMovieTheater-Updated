@@ -365,14 +365,14 @@
                         </div>
                             
                             <div class="form-group d-flex">
-                                <p>Total Price: TODO</p>
-                                <p></p>
+                                <p>Total Price:</p>
+                                <p class="TotalMoviePricing"></p>
                              </div>
 
                 </div>
 
                         <div class="container">
-                            <h3 class="mt-5">The Remaining Capacity is @ViewBag.RemainingCapacity</h3>
+                            <h3 class="mt-5">The Remaining Capacity is <span class="remainingCapacity">@ViewBag.RemainingCapacity</span></h3>
                         </div>
                         
                     }
@@ -391,6 +391,8 @@
                                 console.log(adultTicketPricing); 
                                     //please see https://stackoverflow.com/questions/35073531/how-to-trigger-onchange-when-the-page-load
                                 $(".adultTicketSubtotal").text(adultTicketPricing);
+                                CalculateMovieTicketTotal(); 
+                                CalculateCapacity(); 
                                     }).change();  
                         });
 
@@ -406,10 +408,34 @@
                                     console.log(childTicketPricing);
                                     //please see https://stackoverflow.com/questions/35073531/how-to-trigger-onchange-when-the-page-load
                                     $(".childTicketSubtotal").text(childTicketPricing);
+                                    CalculateMovieTicketTotal();
+                                    CalculateCapacity();
                                 }).change();
                             });
+
+                         function CalculateMovieTicketTotal()
+                         {
+                                let TotalMoviePricing = Number($(".adultTicketSubtotal").text()) + Number($(".childTicketSubtotal").text());
+                                $(".TotalMoviePricing").text(TotalMoviePricing.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
+                                
+                         }
+
+                         function CalculateCapacity()
+                         {
+
+                                let purchasedNumberOfTickets = Number($("#AdultTicketQuantity").val()) + Number($("#ChildTicketQuantity").val());
+
+                                let remainingCapacity = Number($(".remainingCapacity").text()); 
+
+                                remainingCapacity = Number(remainingCapacity - purchasedNumberOfTickets);
+
+                                $(".remainingCapacity").text(remainingCapacity);
+                                
+                       
+                         }
                 </script>
-                }
+                         }
+                
                 <style>
                         /*
                                                        White bordered container for displaying information
