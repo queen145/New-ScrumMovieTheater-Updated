@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ScrumMovieTheater.Models.Showtime>
+
+<h2>Manage Showtimes</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Theater</th>
+            <th>Auditorium</th>
+            <th>Show Date</th>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var showtime in Model)
+        {
+            <tr>
+                <td>@showtime.Movie.Title</td>
+                <td>@showtime.Theater.Name</td>
+                <td>@showtime.Auditorium.Name</td>
+                <td>@showtime.ShowDate.ToString("MM/dd/yyyy")</td>
+                <td>@showtime.TimeSlot</td>
+                <td>$@showtime.Price</td>
+
+                <td>
+    <a asp-area="Admin"
+       asp-controller="Movie"
+       asp-action="EditShowtime"
+       asp-route-showtimeId="@showtime.Id"
+       class="btn btn-primary">
+        Edit
+    </a>
+
+    <form asp-area="Admin"
+          asp-controller="Movie"
+          asp-action="DeleteShowtime"
+          asp-route-showtimeId="@showtime.Id"
+          method="post"
+          style="display:inline;"
+          onsubmit="return confirm('Are you sure you want to delete this showtime?');">
+
+        <button type="submit" class="btn btn-danger">
+            Delete
+        </button>
+        
+    </form>
+</td>
+
+               
+            </tr>
+        }
+    </tbody>
+</table>

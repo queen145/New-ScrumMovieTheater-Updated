@@ -1,0 +1,65 @@
+﻿@model ScrumMovieTheater.Models.UpdateShowtimeViewModel
+
+<h2>Edit Showtime</h2>
+
+<form asp-area="Admin"
+      asp-controller="Movie"
+      asp-action="EditShowtime"
+      method="post">
+
+    <input type="hidden" asp-for="ShowtimeId" />
+
+    <div>
+        <label>Movie</label>
+        <select asp-for="MovieId"
+                class="form-control"
+                asp-items="ViewBag.Movies">
+            <option value="">-- Select Movie --</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Theater</label>
+        <select asp-for="TheaterId"
+                class="form-control"
+                asp-items="ViewBag.Theaters">
+            <option value="">-- Select Theater --</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Auditorium</label>
+        <select asp-for="AuditoriumId"
+                class="form-control"
+                asp-items="ViewBag.Auditoriums">
+            <option value="">-- Select Auditorium --</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Show Date</label>
+        <input asp-for="ShowDate"
+               type="date"
+               class="form-control" />
+    </div>
+
+    <div>
+        <label>Time</label>
+        <input asp-for="TimeSlot"
+               type="time"
+               class="form-control" />
+    </div>
+
+    <div>
+        <label>Price</label>
+        <input asp-for="Price"
+               type="number"
+               step="0.01"
+               class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">
+        Update Showtime
+    </button>
+
+</form>

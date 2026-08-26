@@ -15,14 +15,23 @@
             <div class="card-text">Create a new movie entry in the system</div>
         </a>
 
+        <a asp-area="Admin" asp-controller="Movie" asp-action="AddShowTime" class="card-box">
+            <div class="card-title">🕒 Add ShowTime</div>
+            <div class="card-text">Schedule a movie in a theater</div>
+        </a>
+
+
         <a asp-area="Admin" asp-controller="Movie" asp-action="Index" class="card-box">
             <div class="card-title">🎞 Manage Movies</div>
             <div class="card-text">View, edit, or delete movies</div>
         </a>
 
-         <a asp-area="Admin" asp-controller="Movie" asp-action="AddShowTime" class="card-box">
-            <div class="card-title">🕒 Add ShowTime</div>
-            <div class="card-text">Schedule a movie in a theater</div>
+        <a asp-area="Admin"
+           asp-controller="Movie"
+           asp-action="ManageShowtimes"
+           class="card-box">
+            <div class="card-title">📋 Manage Showtimes</div>
+            <div class="card-text">View and update scheduled movies</div>
         </a>
 
         <a asp-area="Admin" asp-controller="Movie" asp-action="Bookings" class="card-box">

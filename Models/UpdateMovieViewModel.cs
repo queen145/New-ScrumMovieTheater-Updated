@@ -25,17 +25,5 @@ namespace ScrumMovieTheater.Models
 
         public string ImageUrl { get; set; } = "";
 
-        // Showtime
-        public int ShowtimeId { get; set; }
-
-        public int TheaterId { get; set; }
-
-        public int AuditoriumId { get; set; }
-
-        public DateTime ShowDate { get; set; }
-
-        public TimeSpan TimeSlot { get; set; }
-
-        public decimal Price { get; set; }
     }
 }

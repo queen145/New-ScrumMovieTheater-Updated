@@ -89,43 +89,6 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
                 ImageUrl = movie.ImageUrl
             };
 
-            if (showtime != null)
-            {
-                model.ShowtimeId = showtime.Id;
-                model.TheaterId = showtime.TheaterId;
-                model.AuditoriumId = showtime.AuditoriumId;
-                model.ShowDate = showtime.ShowDate;
-                model.TimeSlot = showtime.TimeSlot;
-                model.Price = showtime.Price;
-            }
-
-            ViewBag.Theaters = new SelectList(
-                _context.Theaters,
-                "TheaterId",
-                "Name",
-                model.TheaterId
-            );
-
-            ViewBag.Auditoriums = new SelectList(
-                _context.Auditoriums,
-                "AuditoriumId",
-                "Name",
-                model.AuditoriumId
-            );
-
-            ViewBag.Showtimes = new SelectList(
-                _context.Showtimes
-                    .Where(s => s.MovieId == movieId)
-                    .Select(s => new
-                    {
-                        Id = s.Id,
-                        Display = $"Theater {s.TheaterId} - {s.ShowDate:MM/dd/yyyy} - {s.TimeSlot}"
-                    }),
-                "Id",
-                "Display",
-                model.ShowtimeId
-            );
-
             return View(model);
         }
 
@@ -147,20 +110,6 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             existing.Rating = model.Rating;
             existing.ReleaseDate = model.ReleaseDate;
             existing.ImageUrl = model.ImageUrl;
-
-
-            // Update Showtime
-            var showtime = _context.Showtimes
-                .FirstOrDefault(s => s.Id == model.ShowtimeId);
-
-            if (showtime != null)
-            {
-                showtime.TheaterId = model.TheaterId;
-                showtime.AuditoriumId = model.AuditoriumId;
-                showtime.ShowDate = model.ShowDate;
-                showtime.TimeSlot = model.TimeSlot;
-                showtime.Price = model.Price;
-            }
 
 
             _context.SaveChanges();
@@ -281,7 +230,109 @@ namespace ScrumMovieTheater.Areas.Admin.Controllers
             return View(showTime);
         }
 
-    public IActionResult Bookings()
+        // Get method for update showtime
+        [HttpGet]
+        public IActionResult EditShowtime(int showtimeId)
+        {
+            var showtime = _context.Showtimes
+                .FirstOrDefault(s => s.Id == showtimeId);
+
+            if (showtime == null)
+                return NotFound();
+
+            var model = new UpdateShowtimeViewModel
+            {
+                ShowtimeId = showtime.Id,
+                MovieId = showtime.MovieId,
+                TheaterId = showtime.TheaterId,
+                AuditoriumId = showtime.AuditoriumId,
+                ShowDate = showtime.ShowDate,
+                TimeSlot = showtime.TimeSlot,
+                Price = showtime.Price
+            };
+
+            ViewBag.Movies = new SelectList(
+                _context.Movies,
+                "MovieId",
+                "Title",
+                model.MovieId
+            );
+
+            ViewBag.Theaters = new SelectList(
+                _context.Theaters,
+                "TheaterId",
+                "Name",
+                model.TheaterId
+            );
+
+            ViewBag.Auditoriums = new SelectList(
+                _context.Auditoriums,
+                "AuditoriumId",
+                "Name",
+                model.AuditoriumId
+            );
+
+            return View(model);
+        }
+
+        // update showtime
+
+        [HttpPost]
+        public IActionResult EditShowtime(UpdateShowtimeViewModel model)
+        {
+            var showtime = _context.Showtimes
+                .FirstOrDefault(s => s.Id == model.ShowtimeId);
+
+            if (showtime == null)
+                return NotFound();
+
+            showtime.MovieId = model.MovieId;
+            showtime.TheaterId = model.TheaterId;
+            showtime.AuditoriumId = model.AuditoriumId;
+            showtime.ShowDate = model.ShowDate;
+            showtime.TimeSlot = model.TimeSlot;
+            showtime.Price = model.Price;
+
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Showtime updated successfully!";
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteShowtime(int showtimeId)
+        {
+            var showtime = _context.Showtimes
+                .FirstOrDefault(s => s.Id == showtimeId);
+
+            if (showtime == null)
+                return NotFound();
+
+            _context.Showtimes.Remove(showtime);
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Showtime deleted successfully!";
+
+            return RedirectToAction("ManageShowtimes");
+        }
+
+        // Manage showtimes
+        [HttpGet]
+        public IActionResult ManageShowtimes()
+        {
+            var showtimes = _context.Showtimes
+                .Include(s => s.Movie)
+                .Include(s => s.Theater)
+                .Include(s => s.Auditorium)
+                .OrderBy(s => s.ShowDate)
+                .ThenBy(s => s.TimeSlot)
+                .ToList();
+
+            return View(showtimes);
+        }
+        public IActionResult Bookings()
     {
         var bookings = _context.Bookings
             .Include(b => b.Showtime)
