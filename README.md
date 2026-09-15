@@ -10,9 +10,36 @@
 
 
 
-\[▶️ Watch the ScrumMovieTheater Demo on YouTube](PASTE\_YOUR\_YOUTUBE\_LINK\_HERE)
+\[▶️ Watch the ScrumMovieTheater Demo on YouTube](https://youtu.be/psEUUA9JqSA?si=Vrn_ntndQZFVUPMl)
 
+## 📸 Screenshots
 
+### 🏠 Home Page
+![Home Page](Screenshots/firstPage.png)
+
+### 🎬 Movies
+![Movies](Screenshots/SecondPage.png)
+
+### 🕒 Showtimes
+![Showtime Page](Screenshots/3rdPageSowtime.png)
+
+### 🍿 Concessions
+![Concessions](Screenshots/4thConcession.png)
+
+### 🎟️ Kiosk
+![Kiosk](Screenshots/5thKisok.png)
+
+### 👨‍💼 Manager
+![Manager](Screenshots/6thManager.png)
+
+### 🔐 Admin Login
+![Admin Login](Screenshots/AdminLogin.png)
+
+### 📊 Admin Dashboard
+![Admin Dashboard](Screenshots/AdminDashboard.png)
+
+### ➕ Add Showtime
+![Add Showtime](Screenshots/Addshowtime.png)
 
 \## 📌 About the Project
 
